@@ -37,7 +37,8 @@ public class AddToCartServlet extends HttpServlet {
 
             int row = statement.executeUpdate();
             if (row > 0) {
-                response.sendRedirect("view_cart.jsp"); // Redirect to the cart view page
+            	
+                response.sendRedirect("ViewCartServlet"); // Redirect to the cart view page
             } else {
                 request.setAttribute("message", "Failed to add product to cart");
                 getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);

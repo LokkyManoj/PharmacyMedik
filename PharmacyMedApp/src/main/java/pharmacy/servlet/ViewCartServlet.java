@@ -13,76 +13,98 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mysql.cj.jdbc.Blob;
 
 @WebServlet("/ViewCartServlet")
 public class ViewCartServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int userId = Integer.parseInt(request.getParameter("user_id"));
-		List<CartItem> cartItems = new ArrayList<>();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("id"));
+        Integer userId = (Integer) session.getAttribute("id");
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+        if (userId == null) {
+            // Redirect to login if user is not logged in
+            response.sendRedirect("PharmacyLogin.jsp");
+            return;
+        }
 
-			String dbURL = "jdbc:mysql://localhost:3306/medik";
-			String dbUser = "root";
-			String dbPass = "12345678";
-			Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        List<CartItem> cartItems = new ArrayList<>();
 
-			String sql = "SELECT a.product_id, a.product_name, a.product_price, c.quantity " + "FROM pharmacy_admin a "
-					+ "JOIN add_cart c ON a.product_id = c.product_id " + "WHERE c.id = ?";
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, userId);
-			ResultSet resultSet = statement.executeQuery();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-			while (resultSet.next()) {
-				int productId = resultSet.getInt("product_id");
-				String productName = resultSet.getString("product_name");
-				int productPrice = resultSet.getInt("product_price");
-				int quantity = resultSet.getInt("quantity");
+            String dbURL = "jdbc:mysql://localhost:3306/medik";
+            String dbUser = "root";
+            String dbPass = "12345678";
+            Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
-				cartItems.add(new CartItem(productId, productName, productPrice, quantity));
-			}
+            String sql = "SELECT a.product_id, a.product_name, a.product_price, a.product_image, c.quantity " +
+                         "FROM pharmacy_admin a " +
+                         "JOIN add_cart c ON a.product_id = c.product_id " +
+                         "WHERE c.id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
 
-			conn.close();
-		} catch (SQLException | ClassNotFoundException ex) {
-			ex.printStackTrace();
-			request.setAttribute("message", "ERROR: " + ex.getMessage());
-		}
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("product_id");
+                String productName = resultSet.getString("product_name");
+                int productPrice = resultSet.getInt("product_price");
+                Blob productImage = (Blob) resultSet.getBlob("product_image");
+                int quantity = resultSet.getInt("quantity");
 
-		request.setAttribute("cartItems", cartItems);
-		getServletContext().getRequestDispatcher("/view_cart.jsp").forward(request, response);
-	}
+                cartItems.add(new CartItem(productId, productName, productPrice, productImage, quantity));
+//                System.out.println("cartItems" + cartItems);
+            }
 
-	public class CartItem {
-		private int productId;
-		private String productName;
-		private int productPrice;
-		private int quantity;
+            conn.close();
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            request.setAttribute("message", "ERROR: " + ex.getMessage());
+        }
 
-		public CartItem(int productId, String productName, int productPrice, int quantity) {
-			this.productId = productId;
-			this.productName = productName;
-			this.productPrice = productPrice;
-			this.quantity = quantity;
-		}
+        request.setAttribute("cartItems", cartItems);
+        getServletContext().getRequestDispatcher("/view_cart.jsp").forward(request, response);
+    }
 
-		public int getProductId() {
-			return productId;
-		}
+    public class CartItem {
+        private int productId;
+        private String productName;
+        private int productPrice;
+        private Blob productImage;
+        private int quantity;
 
-		public String getProductName() {
-			return productName;
-		}
+        public CartItem(int productId, String productName, int productPrice, Blob productImage, int quantity) {
+            this.productId = productId;
+            this.productName = productName;
+            this.productPrice = productPrice;
+            this.productImage = productImage;
+            this.quantity = quantity;
+        }
 
-		public int getProductPrice() {
-			return productPrice;
-		}
+        public int getProductId() {
+            return productId;
+        }
 
-		public int getQuantity() {
-			return quantity;
-		}
-	}
+        public String getProductName() {
+            return productName;
+        }
+
+        public int getProductPrice() {
+            return productPrice;
+        }
+
+        public Blob getProductImage() {
+            return productImage;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+    }
 }
