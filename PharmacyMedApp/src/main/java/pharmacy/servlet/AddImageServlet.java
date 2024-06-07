@@ -16,17 +16,14 @@ public class AddImageServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Retrieve values from the form
         int productId = Integer.parseInt(request.getParameter("product_id"));
         String productName = request.getParameter("product_name");
-        InputStream inputStream = null; // Input stream of the upload file
+        InputStream inputStream = null; 
         Part filePart = request.getPart("product_image");
         if (filePart != null) {
-            // Debugging messages
             System.out.println(filePart.getName());
             System.out.println(filePart.getSize());
             System.out.println(filePart.getContentType());
-            // Obtain the input stream of the uploaded file
             inputStream = filePart.getInputStream();
         }
         int productQuantity = Integer.parseInt(request.getParameter("product_quantity"));
@@ -56,7 +53,6 @@ public class AddImageServlet extends HttpServlet {
             statement.setString(2, productName);
 
             if (inputStream != null) {
-                // Fetches input stream of the upload file for the blob column
                 statement.setBlob(3, inputStream);
             }
             statement.setInt(4, productQuantity);
@@ -83,9 +79,7 @@ public class AddImageServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        // Sets the message in request scope
         request.setAttribute("Message", message);
-        // Forwards to the message page
         getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
     }
 }

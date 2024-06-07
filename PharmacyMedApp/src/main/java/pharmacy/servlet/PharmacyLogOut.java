@@ -23,7 +23,7 @@ public class PharmacyLogOut extends HttpServlet {
 		HttpSession session = request.getSession(false); // Fetch the existing session
 
 		if (session != null) {
-			session.invalidate(); // Invalidate the session
+			session.invalidate(); 
 		}
 
 		response.sendRedirect("PharmacyHome.jsp"); 
@@ -36,12 +36,12 @@ public class PharmacyLogOut extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 
-		HttpSession session = request.getSession(false); // Fetch the existing session
+		HttpSession session = request.getSession(false); 
 
 		if (session != null) {
-			session.invalidate(); // Invalidate the session
+			session.invalidate(); 
 		}
 
-		response.sendRedirect("PharmacyHome.jsp"); // Redirect back to login page
+		response.sendRedirect("PharmacyHome.jsp"); 
 	}
 }

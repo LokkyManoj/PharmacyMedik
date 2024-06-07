@@ -31,14 +31,13 @@ public class ViewCartServlet extends HttpServlet {
         Integer userId = (Integer) session.getAttribute("id");
 
         if (userId == null) {
-            // Redirect to login if user is not logged in
             response.sendRedirect("PharmacyLogin.jsp");
             return;
         }
 
         List<CartItem> cartItems = new ArrayList<>();
 
-        int cartSize = 0; // Initialize cart size
+        int cartSize = 0; 
 
         try {
             Connection conn = PharmacyRegConnection.getConnection();
@@ -59,7 +58,7 @@ public class ViewCartServlet extends HttpServlet {
                 int quantity = resultSet.getInt("quantity");
 
                 cartItems.add(new CartItem(productId, productName, productPrice, productImage, quantity));
-                cartSize += quantity; // Increment cart size
+                cartSize += quantity; 
             }
 
     

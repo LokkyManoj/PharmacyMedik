@@ -48,7 +48,6 @@ public class PharmacyLogIn extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Assuming a MySQL database connection
         String jdbcUrl = "jdbc:mysql://localhost:3306/medik";
         String dbUsername = "root";
         String dbPassword = "12345678";
@@ -65,20 +64,17 @@ public class PharmacyLogIn extends HttpServlet {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                // Valid credentials, create a session
                 HttpSession session = request.getSession();
                 session.setAttribute("id", result.getInt("id"));
                 session.setAttribute("email", email);
                 session.setAttribute("name", result.getString("name"));
 
-                // Check if the email ends with ".medik.com"
                 if (email.endsWith("@medik.com")) {
-                    response.sendRedirect("ImageAdmin.jsp"); // Redirect to ImageAdmin.jsp
-                } else {
-                    response.sendRedirect("PharmacyHome.jsp"); // Redirect to PharmacyHome.jsp
+                    response.sendRedirect("ImageAdmin.jsp"); 
+                    } else {
+                    response.sendRedirect("PharmacyHome.jsp"); 
                 }
             } else {
-                // Invalid credentials
                 PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Invalid credentials. Please try again.');");

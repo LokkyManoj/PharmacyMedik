@@ -79,7 +79,6 @@ public class PharmacyMainServlet extends HttpServlet {
             this.category = category;
         }
 
-        // Getters
         public int getProductId() {
             return productId;
         }

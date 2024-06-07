@@ -97,7 +97,6 @@ public class ViewProductServlet extends HttpServlet {
 
         }
 
-        // Getters
         public int getProductId() {
             return productId;
         }

@@ -29,7 +29,7 @@ header {
 	padding: 10px 20px;
 	background-color: #e9ecef;
 	border-bottom: 1px solid #e9ecef;
-	position: relative; /* Added */
+	position: relative; 
 }
 
 .logo-container {

@@ -39,7 +39,7 @@ h2 {
 
 h2 img {
 	margin-right: 10px;
-	height: 30px; /* Adjust the height according to your logo size */
+	height: 30px;
 }
 
 .form-group {
