@@ -2,12 +2,12 @@ package pharmacy.servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.cj.jdbc.Blob;
+
+import pharmacy.model.CartItem;
+import pharmacy.util.PharmacyRegConnection;
 
 @WebServlet("/ViewCartServlet")
 public class ViewCartServlet extends HttpServlet {
@@ -35,13 +38,10 @@ public class ViewCartServlet extends HttpServlet {
 
         List<CartItem> cartItems = new ArrayList<>();
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+        int cartSize = 0; // Initialize cart size
 
-            String dbURL = "jdbc:mysql://localhost:3306/medik";
-            String dbUser = "root";
-            String dbPass = "12345678";
-            Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        try {
+            Connection conn = PharmacyRegConnection.getConnection();
 
             String sql = "SELECT a.product_id, a.product_name, a.product_price, a.product_image, c.quantity " +
                          "FROM pharmacy_admin a " +
@@ -59,8 +59,11 @@ public class ViewCartServlet extends HttpServlet {
                 int quantity = resultSet.getInt("quantity");
 
                 cartItems.add(new CartItem(productId, productName, productPrice, productImage, quantity));
-//                System.out.println("cartItems" + cartItems);
+                cartSize += quantity; // Increment cart size
             }
+
+    
+            session.setAttribute("cartItems", cartSize);
 
             conn.close();
         } catch (SQLException | ClassNotFoundException ex) {
@@ -70,41 +73,5 @@ public class ViewCartServlet extends HttpServlet {
 
         request.setAttribute("cartItems", cartItems);
         getServletContext().getRequestDispatcher("/view_cart.jsp").forward(request, response);
-    }
-
-    public class CartItem {
-        private int productId;
-        private String productName;
-        private int productPrice;
-        private Blob productImage;
-        private int quantity;
-
-        public CartItem(int productId, String productName, int productPrice, Blob productImage, int quantity) {
-            this.productId = productId;
-            this.productName = productName;
-            this.productPrice = productPrice;
-            this.productImage = productImage;
-            this.quantity = quantity;
-        }
-
-        public int getProductId() {
-            return productId;
-        }
-
-        public String getProductName() {
-            return productName;
-        }
-
-        public int getProductPrice() {
-            return productPrice;
-        }
-
-        public Blob getProductImage() {
-            return productImage;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
     }
 }

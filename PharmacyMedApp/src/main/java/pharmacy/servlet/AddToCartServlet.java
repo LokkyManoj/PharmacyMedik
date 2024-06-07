@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/AddToCartServlet")
 public class AddToCartServlet extends HttpServlet {
@@ -37,8 +38,8 @@ public class AddToCartServlet extends HttpServlet {
 
             int row = statement.executeUpdate();
             if (row > 0) {
-            	
-                response.sendRedirect("ViewCartServlet"); // Redirect to the cart view page
+	
+                response.sendRedirect("PharmacyMainServlet");
             } else {
                 request.setAttribute("message", "Failed to add product to cart");
                 getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
