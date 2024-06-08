@@ -1,10 +1,9 @@
 package pharmacy.model;
 
 import java.sql.Blob;
-import java.sql.Date;
 
 public class Product {
-	private int productId;
+    private int productId;
     private String productName;
     private Blob productImage;
     private int productQuantity;
@@ -17,7 +16,7 @@ public class Product {
     private String expDate;
 
     public Product(int productId, String productName, Blob productImage, int productQuantity, int productPrice,
-                   String description, String uses, String contains, String category,String mfdDate,String expDate) {
+                   String description, String uses, String contains, String category, String mfdDate, String expDate) {
         this.productId = productId;
         this.productName = productName;
         this.productImage = productImage;
@@ -27,8 +26,8 @@ public class Product {
         this.uses = uses;
         this.contains = contains;
         this.category = category;
-        this.mfdDate=mfdDate;
-        this.expDate=expDate;
+        this.mfdDate = mfdDate;
+        this.expDate = expDate;
     }
 
     // Getters
@@ -67,11 +66,12 @@ public class Product {
     public String getCategory() {
         return category;
     }
-    public String getMfdDate() {
-    	return mfdDate;
-    }
-    public String getExpDate() {
-    	return expDate;
-}
-}
 
+    public String getMfdDate() {
+        return mfdDate;
+    }
+
+    public String getExpDate() {
+        return expDate;
+    }
+}

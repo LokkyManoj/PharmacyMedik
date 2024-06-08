@@ -6,8 +6,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import pharmacy.util.PharmacyUserDAO;
 
 @WebServlet("/AddProductServlet")
 @MultipartConfig(maxFileSize = 16177215) 
@@ -21,9 +20,6 @@ public class AddImageServlet extends HttpServlet {
         InputStream inputStream = null; 
         Part filePart = request.getPart("product_image");
         if (filePart != null) {
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
             inputStream = filePart.getInputStream();
         }
         int productQuantity = Integer.parseInt(request.getParameter("product_quantity"));
@@ -31,52 +27,23 @@ public class AddImageServlet extends HttpServlet {
         String description = request.getParameter("description");
         String uses = request.getParameter("uses");
         String contains = request.getParameter("contains");
-        String category=request.getParameter("product_category");
-        String mfdDate=request.getParameter("mfd_date");
-       String expDate=request.getParameter("exp_date");
-        
-        
+        String category = request.getParameter("product_category");
+        String mfdDate = request.getParameter("mfd_date");
+        String expDate = request.getParameter("exp_date");
 
         String message = null; 
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            String dbURL = "jdbc:mysql://localhost:3306/medik";
-            String dbUser = "root";
-            String dbPass = "12345678";
-            Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
-
-            String sql = "INSERT INTO pharmacy_admin (product_id, product_name, product_image, product_quantity, product_price, description, uses, contains,product_category,mfd_date,exp_date) values (?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, productId);
-            statement.setString(2, productName);
-
-            if (inputStream != null) {
-                statement.setBlob(3, inputStream);
+            PharmacyUserDAO dao = new PharmacyUserDAO();
+            boolean success = dao.addProduct(productId, productName, inputStream, productQuantity, productPrice, description, uses, contains, category, mfdDate, expDate);
+            if (success) {
+                message = "Product uploaded and saved into database";
+            } else {
+                message = "Failed to upload and save product";
             }
-            statement.setInt(4, productQuantity);
-            statement.setInt(5, productPrice);
-            statement.setString(6, description);
-            statement.setString(7, uses);
-            statement.setString(8, contains);
-            statement.setString(9, category);
-            statement.setString(10, mfdDate);
-            statement.setString(11, expDate);
-
-
-            
-
-            int row = statement.executeUpdate();
-            if (row > 0) {
-                message = "File uploaded and saved into database";
-            }
-            conn.close();
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
         request.setAttribute("Message", message);

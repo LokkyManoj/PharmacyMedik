@@ -4,7 +4,7 @@
 <%@ page import="java.util.Base64"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.io.InputStream"%>
-<%@ page import="pharmacy.servlet.PharmacyMainServlet.Product"%>
+<%@ page import="pharmacy.model.Product"%>
 <%@ page import="java.io.ByteArrayOutputStream"%>
 <%@ page import="java.io.IOException"%>
 <%@ page import="pharmacy.model.CartItem"%>
@@ -120,7 +120,6 @@ th, td {
 	width: 10px;
 	background-color: red;
 	border-radius: 50%;
-	display:none;
 	
 </style>
 </head>
@@ -140,12 +139,8 @@ th, td {
 			<a href="ViewCartServlet"
 				style="text-decoration: none; color: inherit;"> <i
 				class='bx bx-cart'></i>
-				<span class="red-dot" style="<% 
-            Integer size = (Integer) session.getAttribute("cartItems");
-            if(size == null || size == 0){
-                out.print("display:block;");
-            }
-        %>"></span>
+				<span class="red-dot" style="display: block;"></span>
+                
 			</a>
 		</div>
 	</header>
@@ -227,7 +222,7 @@ th, td {
 	</div>
 
 	<script>
-
+	
 function searchProducts() {
     const searchBar = document.getElementById('search-bar');
     const filter = searchBar.value.toLowerCase();

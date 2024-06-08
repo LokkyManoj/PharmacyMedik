@@ -4,7 +4,7 @@
 <%@ page import="java.util.Base64"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.io.InputStream"%>
-<%@ page import="pharmacy.servlet.ViewProductServlet.Product"%>
+<%@ page import="pharmacy.model.Product"%>
 <%@ page import="java.io.ByteArrayOutputStream"%>
 <%@ page import="java.io.IOException"%>
 <!DOCTYPE html>
