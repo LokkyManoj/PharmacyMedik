@@ -24,7 +24,7 @@ public class PharmacyMainServlet extends HttpServlet {
 
         try {
             String category = "Medicine";
-            products = productDAO.getProductsByCategory(category);
+            products = productDAO.getProductsByCategory(category, request);
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
             request.setAttribute("Message", "ERROR: " + ex.getMessage());

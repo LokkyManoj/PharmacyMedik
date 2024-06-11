@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import pharmacy.util.PharmacyUserDAO;
 
@@ -17,6 +18,8 @@ public class AddToCartServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+    	
         int productId = Integer.parseInt(request.getParameter("product_id"));
         int userId = Integer.parseInt(request.getParameter("user_id"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));

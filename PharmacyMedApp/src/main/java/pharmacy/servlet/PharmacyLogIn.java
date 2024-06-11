@@ -69,6 +69,7 @@ public class PharmacyLogIn extends HttpServlet {
                 session.setAttribute("email", email);
                 session.setAttribute("name", result.getString("name"));
 
+
                 if (email.endsWith("@medik.com")) {
                     response.sendRedirect("ImageAdmin.jsp"); 
                     } else {

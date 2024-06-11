@@ -32,7 +32,7 @@ public class ViewCartServlet extends HttpServlet {
         PharmacyUserDAO cartItemDAO = new PharmacyUserDAO();
 
         try {
-            cartItems = cartItemDAO.getCartItemsByUserId(userId);
+            cartItems = cartItemDAO.getCartItemsByUserId(userId, request);
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
             request.setAttribute("message", "ERROR: " + ex.getMessage());

@@ -8,13 +8,16 @@ public class CartItem {
     private int productPrice;
     private Blob productImage;
     private int quantity;
+    private int cartId;
+   
 
-    public CartItem(int productId, String productName, int productPrice, Blob productImage, int quantity) {
+    public CartItem(int productId, String productName, int productPrice, Blob productImage, int quantity,int cartId) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productImage = productImage;
         this.quantity = quantity;
+        this.cartId=cartId;
     }
 
     public int getProductId() {
@@ -35,5 +38,9 @@ public class CartItem {
 
     public int getQuantity() {
         return quantity;
+    }
+    
+    public int getCartId() {
+    	return cartId;
     }
 }

@@ -6,6 +6,8 @@
 <%@ page import="java.io.ByteArrayOutputStream"%>
 <%@ page import="java.io.IOException"%>
 <%@ page import ="pharmacy.model.CartItem"%>
+<%@ page import ="pharmacy.model.Order"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -79,7 +81,7 @@
         padding: 8px 15px;
         cursor: pointer;
         border-radius: 15px;
-        font-size: 14px;
+        font-size: 15px;
         transition: background-color 0.3s ease;
     }
 
@@ -88,11 +90,11 @@
     }
 
     .product-actions button:hover {
-        background-color: #99bbd3;
+        background-color: #060707;
     }
 
     .product-actions button.delete:hover {
-        background-color: #c82333;
+        background-color: #060707;
     }
     
     .no-items {
@@ -101,13 +103,39 @@
         color: #777;
         margin-top: 20px;
     }
-
+    
+    .back-icon {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 9999;
+    }
+.delete-btn {
+        background-color: transparent;
+        color: #dc3545;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    
+   .delete-btn:hover {
+        color: #060707;
+    }
+    .delete-btn img{
+    height: 15px;
+    }
 </style>
 </head>
 <body>
+    <a href="PharmacyMainServlet" class="back-icon"><i class='bx bx-arrow-back'></i></a>
+
     <h2>Your Cart</h2>
     <div class="container">
-        <%
+        <%   Order order = new Order();
+ 
         List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
         if (cartItems != null && !cartItems.isEmpty()) {
             for (CartItem item : cartItems) {
@@ -144,11 +172,16 @@
                 <p><strong>Total Price:</strong> Rs.<%= item.getProductPrice() * item.getQuantity() %></p>
             </div>
             <div class="product-actions">
-                <form action="UpdateProductServlet" method="get">
-                    <button type="submit">Buy</button>
+                <form action="OrderProductServlet" method="post">
+                <input type="hidden" name="action" value="buy">
+                <input type="hidden" name="total" value=<%= item.getProductPrice() * item.getQuantity() %>>
+                <button type="submit">Buy</button>
                 </form>
                 <form action="RemoveFromCartServlet" method="post">
-                    <button type="submit" class="delete">Remove</button>
+                 <input type="hidden" name="productId" value="<%= item.getProductId() %>">
+        <button type="submit" class="delete-btn">
+                <img src="images1/dustbin.png" alt="Delete" width="20" height="20">
+            </button>
                 </form>
             </div>
         </div>

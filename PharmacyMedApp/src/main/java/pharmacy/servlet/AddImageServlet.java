@@ -30,6 +30,7 @@ public class AddImageServlet extends HttpServlet {
         String category = request.getParameter("product_category");
         String mfdDate = request.getParameter("mfd_date");
         String expDate = request.getParameter("exp_date");
+        
 
         String message = null; 
 
