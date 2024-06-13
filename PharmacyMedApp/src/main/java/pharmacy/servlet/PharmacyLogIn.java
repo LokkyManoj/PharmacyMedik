@@ -19,32 +19,20 @@ import javax.servlet.http.HttpSession;
 public class PharmacyLogIn extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public PharmacyLogIn() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
+   
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        doGet(request, response);
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -56,31 +44,31 @@ public class PharmacyLogIn extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(jdbcUrl, dbUsername, dbPassword);
 
-            String sql = "SELECT * FROM pharmacy_reg_user WHERE email = ? AND password = ?";
+            String sql = "SELECT * FROM pharmacy_reg_user WHERE email = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, email);
-            statement.setString(2, password);
 
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                HttpSession session = request.getSession();
-                session.setAttribute("id", result.getInt("id"));
-                session.setAttribute("email", email);
-                session.setAttribute("name", result.getString("name"));
+                if (password.equals(result.getString("password"))) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("id", result.getInt("id"));
+                    session.setAttribute("email", email);
+                    session.setAttribute("name", result.getString("name"));
 
-
-                if (email.endsWith("@medik.com")) {
-                    response.sendRedirect("ImageAdmin.jsp"); 
+                    if (email.endsWith("@medik.com")) {
+                        response.sendRedirect("ImageAdmin.jsp"); 
                     } else {
-                    response.sendRedirect("PharmacyHome.jsp"); 
+                        response.sendRedirect("PharmacyHome.jsp"); 
+                    }
+                } else {
+                    request.setAttribute("passwordError", "Invalid Password");
+                    request.getRequestDispatcher("PharmacyLogin.jsp").forward(request, response);
                 }
             } else {
-                PrintWriter out = response.getWriter();
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Invalid credentials. Please try again.');");
-                out.println("location='login.jsp';");
-                out.println("</script>");
+                request.setAttribute("emailError", "Invalid Email");
+                request.getRequestDispatcher("PharmacyLogin.jsp").forward(request, response);
             }
 
             conn.close();
@@ -88,4 +76,5 @@ public class PharmacyLogIn extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 }

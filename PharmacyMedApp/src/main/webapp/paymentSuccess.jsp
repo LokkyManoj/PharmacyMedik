@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +6,7 @@
 </head>
 <body>
     <h2>Payment Successful</h2>
-    <div>
-        <label for="productName">Product Name:</label>
-        <span>${sessionScope.productName}</span>
-    </div>
+    
     <div>
         <label for="amount">Amount:</label>
         <span>${sessionScope.amount}</span>
@@ -24,8 +19,8 @@
         <label for="address">Delivery Address:</label>
         <span>${sessionScope.address}</span>
     </div>
-    <form action="OrderProductServlet" method="post">
-        <button type="submit" name="action" value="buy">Order Now</button>
+    <form action="PlaceOrderServlet" method="get">
+        <button type="submit">Order Now</button>
     </form>
 </body>
 </html>

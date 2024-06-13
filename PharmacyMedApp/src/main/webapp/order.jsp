@@ -116,7 +116,7 @@
 
             <div class="form-group">
                 <label>Add Delivery Address:</label>
-                <input type="text" name="address" required />
+                <input type="text" name="address" min=10  required/>
             </div>
             <div class="form-group">
                 <button type="submit" name="action" value="placeOrder">Confrim</button>

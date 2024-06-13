@@ -166,7 +166,8 @@
                 }
             }
             %>
-            <div class="product-info">
+<%--             <%int total; %>
+ --%>            <div class="product-info">
                 <p><strong>Price:</strong> Rs.<%= item.getProductPrice() %></p>
                 <p><strong>Quantity:</strong> <%= item.getQuantity() %></p>
                 <p><strong>Total Price:</strong> Rs.<%= item.getProductPrice() * item.getQuantity() %></p>

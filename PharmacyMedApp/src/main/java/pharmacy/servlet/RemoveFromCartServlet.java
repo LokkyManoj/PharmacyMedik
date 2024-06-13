@@ -30,14 +30,14 @@ public class RemoveFromCartServlet extends HttpServlet {
 
 	    protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
-	        int productId = Integer.parseInt(request.getParameter("productId"));
 	        HttpSession session = request.getSession();
-	        int userId = (Integer) session.getAttribute("id");
+	        int cartId=(Integer) session.getAttribute("cartId");
+	        System.out.println("cartId:"+cartId);
 
 	        PharmacyUserDAO cartItemDAO = new PharmacyUserDAO();
 
 	        try {
-	            boolean removed = cartItemDAO.removeFromCart(userId, productId);
+	            boolean removed = cartItemDAO.removeFromCart(cartId);
 	            if (removed) {
 	                // Redirect back to the cart view
 	                response.sendRedirect("ViewCartServlet");

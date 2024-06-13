@@ -8,10 +8,7 @@
 </head>
 <body>
     <form action="PaymentServlet" method="post">
-        <div>
-            <label for="productName">Product Name:</label>
-            <span>${sessionScope.productName}</span>
-        </div>
+        
         <div>
             <label for="amount">Amount:</label>
             <input type="text" id="amount" name="amountDisplay" value="${sessionScope.total}" readonly>

@@ -59,6 +59,7 @@ public class PharmacyUserDAO {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
+	                
 					int productId = resultSet.getInt("product_id");
 					String productName = resultSet.getString("product_name");
 					Blob productImage = resultSet.getBlob("product_image");
@@ -125,31 +126,32 @@ public class PharmacyUserDAO {
 		}
 	}
 	
-	public void retrieveCart(int cartId,HttpServletRequest request) throws ClassNotFoundException, SQLException {
-        String sql = "SELECT * FROM add_cart WHERE cart_id = ?";
-
-        try (Connection connection = PharmacyRegConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setInt(1, cartId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-            	HttpSession session = request.getSession();
-                session.setAttribute("cart_id", resultSet.getInt("cart_id"));
-                int retrievedCartId = resultSet.getInt("cart_id");
-                int quantity = resultSet.getInt("quantity");
-                int userId = resultSet.getInt("id");
-                int productId = resultSet.getInt("product_id");
-
-                // Now you can use the retrieved values as needed
-                System.out.println("Cart ID: " + retrievedCartId);
-                System.out.println("Quantity: " + quantity);
-                System.out.println("User ID: " + userId);
-                System.out.println("Product ID: " + productId);
-            }
-        }
-    }
+//	public void retrieveCart(int cartId,HttpServletRequest request) throws ClassNotFoundException, SQLException {
+//        String sql = "SELECT * FROM add_cart WHERE cart_id = ?";
+//
+//        try (Connection connection = PharmacyRegConnection.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//
+//            preparedStatement.setInt(1, cartId);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            while (resultSet.next()) {
+//            	HttpSession session = request.getSession();
+//                session.setAttribute("cart_id", resultSet.getInt("cart_id"));
+//                int retrievedCartId = resultSet.getInt("cart_id");
+//                System.out.println("cartId :"+retrievedCartId);
+//                int quantity = resultSet.getInt("quantity");
+//                int userId = resultSet.getInt("id");
+//                int productId = resultSet.getInt("product_id");
+//
+//                // Now you can use the retrieved values as needed
+//                System.out.println("Cart ID: " + retrievedCartId);
+//                System.out.println("Quantity: " + quantity);
+//                System.out.println("User ID: " + userId);
+//                System.out.println("Product ID: " + productId);
+//            }
+//        }
+//    }
 	
 	 public boolean deleteProduct(int productId) throws ClassNotFoundException, SQLException {
 	        String sql = "DELETE FROM pharmacy_admin WHERE product_id = ?";
@@ -217,6 +219,7 @@ public class PharmacyUserDAO {
                     session.setAttribute("quantity", resultSet.getInt("quantity"));
                    
                     session.setAttribute("cartId", resultSet.getInt("cart_id"));
+                    
 //                    System.out.println("pharmacy DAO : "+resultSet.getInt("cart_id"));
                     session.setAttribute("product_id", resultSet.getInt("product_id"));
                     System.out.println("first"+resultSet.getInt("product_id"));
@@ -241,13 +244,14 @@ public class PharmacyUserDAO {
 	
 	 
 	 
-	 public boolean removeFromCart(int userId, int productId) throws ClassNotFoundException, SQLException {
-		    String sql = "DELETE FROM add_cart WHERE id = ? AND product_id = ?";
+	 public boolean removeFromCart(int cartId) throws ClassNotFoundException, SQLException {
+		    String sql = "DELETE FROM add_cart WHERE cart_id = ?";
 		    try (Connection connection = PharmacyRegConnection.getConnection();
 		         PreparedStatement statement = connection.prepareStatement(sql)) {
-		        statement.setInt(1, userId);
-		        statement.setInt(2, productId);
+
+		        statement.setInt(1,cartId);
 		        int rowsAffected = statement.executeUpdate();
+		       
 		        return rowsAffected > 0;
 		    }
 		}
@@ -288,7 +292,6 @@ public class PharmacyUserDAO {
 
 	        try (Connection connection = PharmacyRegConnection.getConnection();
 	             PreparedStatement statement = connection.prepareStatement(sql)) {
-
 	            statement.setInt(1, order.getProductId());
 	            statement.setDate(2, order.getOrderDate());
 	            statement.setInt(3, order.getQuantity());
@@ -298,6 +301,7 @@ public class PharmacyUserDAO {
 	            statement.setString(7, order.getAddress());
 
 	            int row = statement.executeUpdate();
+
 	            return row > 0;
 	        }
 	    }
@@ -318,4 +322,32 @@ public class PharmacyUserDAO {
 				return row > 0;
 			}
 		}
+	 public Product getProductById(int productId) throws SQLException, ClassNotFoundException {
+	        String query = "SELECT * FROM pharmacy_admin WHERE product_id = ?";
+	        try (Connection con = PharmacyRegConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(query)) {
+	            ps.setInt(1, productId);
+	            ResultSet rs = ps.executeQuery();
+	            if (rs.next()) {
+	                Product product = new Product();
+	                product.setProductId(rs.getInt("product_id"));
+	                product.setProductName(rs.getString("product_name"));
+	                product.setProductQuantity(rs.getInt("product_quantity"));
+	                return product;
+	            }
+	        }
+	        return null;
+	    }
+
+	    public boolean updateProductQuantity(int productId, int newQuantity) throws SQLException, ClassNotFoundException {
+	        String query = "UPDATE pharmacy_admin SET product_quantity = ? WHERE product_id = ?";
+	        try (Connection con = PharmacyRegConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(query)) {
+	            ps.setInt(1, newQuantity);
+	            ps.setInt(2, productId);
+	            int rowsUpdated = ps.executeUpdate();
+	            return rowsUpdated > 0;
+	        }
+	    }
+	 
 }

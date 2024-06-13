@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import java.sql.*;
 import pharmacy.util.PharmacyUserDAO;
 
-@WebServlet("/AddProductServlet")
+@WebServlet("/AddImageServlet")
 @MultipartConfig(maxFileSize = 16177215) 
 public class AddImageServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;

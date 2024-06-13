@@ -31,7 +31,7 @@ public class PaymentServlet extends HttpServlet {
             int amount = Integer.parseInt(request.getParameter("amount"));
             int userId = (int) session.getAttribute("id");
             int productId = (int) session.getAttribute("product_id");
-            String productName = (String) session.getAttribute("productName");
+            String productName = (String) session.getAttribute("product_name");
             Date expectedDeliveryDate = (Date) session.getAttribute("expectedDeliveryDate");
             String address = (String) session.getAttribute("address");
 
@@ -47,7 +47,8 @@ public class PaymentServlet extends HttpServlet {
                 boolean success = dao.payment(payment);
 
                 if (success) {
-                    session.setAttribute("productName", productName);
+                    session.setAttribute("product_name", productName);
+                    System.out.println(productName);
                     session.setAttribute("amount", amount);
                     session.setAttribute("expectedDeliveryDate", expectedDeliveryDate);
                     session.setAttribute("address", address);

@@ -54,7 +54,10 @@ public class OrderProductServlet extends HttpServlet {
             String status = request.getParameter("status");
             Date orderDate = Date.valueOf(request.getParameter("orderDate"));
             Date expectedDeliveryDate = Date.valueOf(request.getParameter("expectedDeliveryDate"));
+            session.setAttribute("expectedDeliveryDate",expectedDeliveryDate );
             String address = request.getParameter("address");
+           session.setAttribute("address", address);
+
 
             Order order = new Order();
             order.setProductId(productId);

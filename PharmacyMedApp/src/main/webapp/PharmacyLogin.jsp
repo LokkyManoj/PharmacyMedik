@@ -94,6 +94,15 @@
     .logout-btn:hover {
         background-color: #c82333;
     }
+    .error-box {
+        background-color: #ffe6e6; 
+        color: #ff0000;
+        padding: 5px 12px; 
+        border-radius: 5px;
+        margin-top: 5px;
+         width: 95%;
+    }
+    
 </style>
 </head>
 <body>
@@ -103,14 +112,22 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
+                <% String emailError = (String)request.getAttribute("emailError");
+                if (emailError != null) { %>
+                    <div class="error-box"><%= emailError %></div> <!-- Display email error message -->
+                <% } %>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
+                <% String passwordError = (String)request.getAttribute("passwordError");
+                if (passwordError != null) { %>
+                    <div class="error-box"><%= passwordError %></div> <!-- Display password error message -->
+                <% } %>
             </div>
             <button type="submit">Login</button>
         </form>
-       
     </div>
 </body>
+
 </html>

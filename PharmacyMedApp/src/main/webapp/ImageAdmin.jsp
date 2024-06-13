@@ -123,6 +123,7 @@ a:hover {
     
     </style>
 </head>
+
 <body>
   
     <header>
@@ -153,25 +154,25 @@ a:hover {
 			</nav>
     
     </header>
-        <form action="AddProductServlet" method="post" enctype="multipart/form-data">
+        <form action="AddImageServlet" method="post" enctype="multipart/form-data">
     
         <label for="product_id">Product ID:</label>
-        <input type="number" id="product_id" name="product_id" required><br><br>
+        <input type="number" id="product_id" name="product_id" required min=1><br><br>
 
         <label for="product_name">Product Name:</label>
-        <input type="text" id="product_name" name="product_name" required><br><br>
+        <input type="text" id="product_name" name="product_name" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required><br><br>
 
         <label for="product_image">Product Image:</label>
         <input type="file" id="product_image" name="product_image" accept="image/*" required><br><br>
 
         <label for="product_quantity">Product Quantity:</label>
-        <input type="number" id="product_quantity" name="product_quantity" required><br><br>
+        <input type="number" id="product_quantity" name="product_quantity" required min=1><br><br>
 
         <label for="product_price">Product Price:</label>
-        <input type="number" id="product_price" name="product_price" required><br><br>
+        <input type="number" id="product_price" name="product_price" required min=1><br><br>
         
          <label for="product_category">Product Category:</label>
-        <input type="text" id="product_category" name="product_category" required><br><br>
+        <input type="text" id="product_category" name="product_category" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required><br><br>
         
          <label for="mfd_date">Mfd Date:</label>
         <input type="date" id="mfd_date" name="mfd_date" required><br><br>
@@ -181,16 +182,18 @@ a:hover {
         
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description" maxlength="300" required></textarea><br><br>
+        <textarea id="description" name="description" maxlength="900" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required></textarea><br><br>
 
         <label for="uses">Uses:</label>
-        <textarea id="uses" name="uses" maxlength="200" required></textarea><br><br>
+        <textarea id="uses" name="uses" maxlength="900" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required></textarea><br><br>
 
         <label for="contains">Contains:</label>
-        <textarea id="contains" name="contains" maxlength="200" required></textarea><br><br>
+        <textarea id="contains" name="contains" maxlength="900" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required></textarea><br><br>
 
         <input type="submit" value="Add Product">
         <a href="ViewProductServlet">View the Products</a>
     </form>
+    
+    
 </body>
 </html>
