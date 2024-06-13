@@ -37,7 +37,6 @@ public class PharmacyUserDAO {
 			preparedStatement.setString(3, user.getMail());
 			preparedStatement.setString(4, user.getPassword());
 
-//            preparedStatement.executeUpdate();
 			int rowsAffected = preparedStatement.executeUpdate();
 			System.out.println("Rows affected: " + rowsAffected);
 		}
@@ -256,36 +255,7 @@ public class PharmacyUserDAO {
 		    }
 		}
 	 
-//	 public void placeOrder(int productId, int userId) throws SQLException, ClassNotFoundException {
-//		    try (Connection conn = PharmacyRegConnection.getConnection()) {
-//		        // Get cart item details for the selected product and user
-//		        CartItem cartItem = getCartItemDetails(productId, userId, conn);
-//
-//		        // Calculate the expected delivery date (one day ahead of the order date)
-//		        LocalDate orderDate = LocalDate.now();
-//		        LocalDate expectedDeliveryDate = orderDate.plusDays(1);
-//
-//		        // Insert order details into the orders table
-//		        String sql = "INSERT INTO orders (product_id, order_date, quantity, status, expected_delivery_date, address, id) " +
-//		                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
-//		        try (PreparedStatement statement = conn.prepareStatement(sql)) {
-//		            statement.setInt(1, cartItem.getProductId());
-//		            statement.setDate(2, java.sql.Date.valueOf(orderDate)); // Current date as order date
-//		            statement.setInt(3, cartItem.getQuantity());
-//		            statement.setString(4, "Processing"); // Initial status
-//		            statement.setDate(5, java.sql.Date.valueOf(expectedDeliveryDate)); // Expected delivery date
-//		            statement.setString(6, null); // Address initially null
-//		            statement.setInt(7, userId);
-//
-//		            statement.executeUpdate();
-//		        }
-//		    }
-//		}
-//
-//	private CartItem getCartItemDetails(int productId, int userId, Connection conn) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
 	 
 	 public boolean placeOrder(Order order) throws ClassNotFoundException, SQLException {
 	        String sql = "INSERT INTO orders (product_id, order_date, quantity, status, expected_delivery_date,id, address) VALUES (?, ?, ?, ?, ?, ?, ?)";

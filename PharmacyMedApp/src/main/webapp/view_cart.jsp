@@ -128,6 +128,7 @@
     height: 15px;
     }
 </style>
+  <%int total=0; %>
 </head>
 <body>
     <a href="PharmacyMainServlet" class="back-icon"><i class='bx bx-arrow-back'></i></a>
@@ -166,12 +167,14 @@
                 }
             }
             %>
-<%--             <%int total; %>
- --%>            <div class="product-info">
+          
+            <div class="product-info">
+        
                 <p><strong>Price:</strong> Rs.<%= item.getProductPrice() %></p>
                 <p><strong>Quantity:</strong> <%= item.getQuantity() %></p>
+               <input type="hidden" value= <%= total+=(item.getProductPrice() * item.getQuantity()) %>>
                 <p><strong>Total Price:</strong> Rs.<%= item.getProductPrice() * item.getQuantity() %></p>
-            </div>
+            </div> 
             <div class="product-actions">
                 <form action="OrderProductServlet" method="post">
                 <input type="hidden" name="action" value="buy">
@@ -183,8 +186,10 @@
         <button type="submit" class="delete-btn">
                 <img src="images1/dustbin.png" alt="Delete" width="20" height="20">
             </button>
+           
                 </form>
             </div>
+           
         </div>
         <%
             }
@@ -195,5 +200,14 @@
         }
         %>
     </div>
+            <center> <p>Total Amount :<%=total %></p></center> 
+              
+               <div class="product-actions">
+                <form action="OrderProductServlet" method="post">
+                <input type="hidden" name="action" value="buy">
+                <input type="hidden" name="total" value=<%= total %>>
+                <button type="submit">Buy Now</button>
+                </form>
+    
 </body>
 </html>

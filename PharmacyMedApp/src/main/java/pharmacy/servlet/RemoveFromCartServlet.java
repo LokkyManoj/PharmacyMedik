@@ -39,16 +39,13 @@ public class RemoveFromCartServlet extends HttpServlet {
 	        try {
 	            boolean removed = cartItemDAO.removeFromCart(cartId);
 	            if (removed) {
-	                // Redirect back to the cart view
 	                response.sendRedirect("ViewCartServlet");
 	            } else {
-	                // Handle failure to remove
-	                // You can set an attribute and redirect to an error page
+	                
 	            }
 	        } catch (SQLException | ClassNotFoundException ex) {
 	            ex.printStackTrace();
 	            request.setAttribute("message", "ERROR: " + ex.getMessage());
-	            // Forward to an error page
 	        }
 	    }
 

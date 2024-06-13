@@ -36,20 +36,17 @@ public class PlaceOrderServlet extends HttpServlet {
                         response.sendRedirect("payment_success.jsp");
                     } else {
                         request.setAttribute("message", "Failed to update product quantity");
-                        getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
+                        response.sendRedirect("error.jsp");
                     }
                 } else {
                     request.setAttribute("message", "Insufficient product quantity");
-                    getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
-                }
+                    response.sendRedirect("error.jsp");                }
             } else {
                 request.setAttribute("message", "Product not found");
-                getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
-            }
+                response.sendRedirect("error.jsp");            }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
             request.setAttribute("message", "ERROR: " + ex.getMessage());
-            getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
-        }
+            response.sendRedirect("error.jsp");        }
     }
 }
