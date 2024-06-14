@@ -63,6 +63,7 @@ public class UpdateProductServlet extends HttpServlet {
 			throws ServletException, IOException {
 		int productId = Integer.parseInt(request.getParameter("productId"));
 		String productName = request.getParameter("productName");
+		int productQuantity=Integer.parseInt(request.getParameter("product_quantity"));
 		String productPrice = request.getParameter("productPrice");
 		String description = request.getParameter("description");
 		String uses = request.getParameter("uses");
@@ -77,15 +78,17 @@ public class UpdateProductServlet extends HttpServlet {
 			String dbPass = "12345678";
 			Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
-			String updateQuery = "UPDATE pharmacy_admin SET product_name = ?, product_price = ?, description = ?, uses = ?, contains = ?, product_category = ? WHERE product_id = ?";
+			String updateQuery = "UPDATE pharmacy_admin SET product_name = ?,product_quantity=?, product_price = ?, description = ?, uses = ?, contains = ?, product_category = ? WHERE product_id = ?";
 			PreparedStatement statement = conn.prepareStatement(updateQuery);
 			statement.setString(1, productName);
-			statement.setString(2, productPrice);
-			statement.setString(3, description);
-			statement.setString(4, uses);
-			statement.setString(5, contains);
-			statement.setString(6, category);
-			statement.setInt(7, productId);
+			statement.setInt(2, productQuantity);
+
+			statement.setString(3, productPrice);
+			statement.setString(4, description);
+			statement.setString(5, uses);
+			statement.setString(6, contains);
+			statement.setString(7, category);
+			statement.setInt(8, productId);
 
 			statement.executeUpdate();
 			conn.close();

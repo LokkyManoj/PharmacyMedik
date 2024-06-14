@@ -164,6 +164,9 @@
             <span>${sessionScope.address}</span>
         </div>
         <div>
+        <label style="color:red">Cash on Delivery is only available for orders above Rs.300 cart value</label>
+        </div>
+        <div>
             <label for="paymentMethod">Select Payment Method:</label>
             <div class="payment-method" onclick="selectPaymentMethod('cod')">
                 <label for="cod"><input type="radio" id="cod" name="paymentMethod" value="Cash on Delivery" required> Cash on Delivery</label>
@@ -176,7 +179,9 @@
             </div>
         </div>
         <div>
+        <form action="PlaceOrderAndDeleteCartServlet" method="get">
             <button type="submit" name="action" value="placeOrder">Continue</button>
+            </form>
         </div>
     </form>
 
@@ -186,24 +191,26 @@
             <h2>Enter Card</h2>
             <div>
                 <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" name="cardNumber" placeholder="1234-5678-9876-54321">
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="1234-5678-9876-54321" required>
             </div>
             <div class="input-group">
                 <div >
                     <label for="validThrough">Valid Through</label>
-                    <input type="text" id="validThrough" name="validThrough" placeholder="MM/YY">
+                    <input type="text" id="validThrough" name="validThrough" placeholder="MM/YY" required>
                 </div>
                 <div style=" line-height: 42px">
                     <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" name="cvv" placeholder="123">
+                    <input type="text" id="cvv" name="cvv" placeholder="123" required>
                 </div>
             </div>
             <div>
                 <label for="nameOnCard">Name on Card</label>
-                <input type="text" id="nameOnCard" name="nameOnCard" placeholder="e.g.Manoj Kumar">
+                <input type="text" id="nameOnCard" name="nameOnCard" placeholder="e.g.Manoj Kumar" required>
             </div>
             <div>
-                <button type="submit" class="submitBtn">Pay ${sessionScope.total}</button>
+            <form action="PlaceOrderAndDeleteCartServlet" method="get">
+            <button type="submit" class="submitBtn">Pay ${sessionScope.total}</button>
+            </form>
             </div>
         </div>
     </div>
@@ -214,10 +221,12 @@
             <h2>UPI Payment</h2>
             <div>
                 <label for="upiId">Add UPI ID</label>
-                <input type="text" id="upiId" name="upiId" placeholder="Enter your UPI ID">
+                <input type="text" id="upiId" name="upiId" placeholder="Enter your UPI ID" required>
             </div>
             <div>
+            <form action="PlaceOrderAndDeleteCartServlet" method="get">
                 <button type="submit" class="submitBtn">Pay ${sessionScope.total}</button>
+                </form>
             </div>
         </div>
     </div>

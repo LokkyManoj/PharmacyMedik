@@ -51,7 +51,7 @@ input[type="file"] {
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color:#3d7676;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -60,7 +60,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color:black;
 }
 
 a {
@@ -182,15 +182,15 @@ a:hover {
         
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description" maxlength="900" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required></textarea><br><br>
+        <textarea id="description" name="description" maxlength="900"  required></textarea><br><br>
 
         <label for="uses">Uses:</label>
         <textarea id="uses" name="uses" maxlength="900" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required></textarea><br><br>
 
         <label for="contains">Contains:</label>
-        <textarea id="contains" name="contains" maxlength="900" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required></textarea><br><br>
+        <textarea id="contains" name="contains" maxlength="900"  required></textarea><br><br>
 
-        <input type="submit" value="Add Product">
+       <center> <input type="submit" value="Add Product"></center>
         <a href="ViewProductServlet">View the Products</a>
     </form>
     

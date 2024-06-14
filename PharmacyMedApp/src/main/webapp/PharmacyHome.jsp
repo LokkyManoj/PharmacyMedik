@@ -167,7 +167,7 @@ footer {
 
 					<!--                 <li><a href="PharmacyReg.jsp"><img src="images1/Registericon.png" alt="SignIn Icon">SignIn</a></li>
  -->
-					<li><a href="#" class="cart"><img
+					<li><a href="ViewCartServlet" style="text-decoration: none; class="cart"><img
 							src="images1/icons8-cart-32.png" alt="Cart Icon">Cart</a></li>
 				</ul>
 			</nav>
@@ -193,9 +193,6 @@ footer {
 				</div>
 			</section>
 		</main>
-		<footer>
-			<p>&copy; 2024 Medik Pharmacy. All rights reserved.</p>
-		</footer>
-	</form>
+			</form>
 </body>
 </html>

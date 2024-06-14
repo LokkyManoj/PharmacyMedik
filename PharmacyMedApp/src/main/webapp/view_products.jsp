@@ -14,6 +14,18 @@
 <title>View Products</title>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style>
+
+.back-icon-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.back-icon-container i {
+    color: black;
+    font-size: 24px;
+    cursor: pointer;
+}
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -61,6 +73,8 @@ th, td {
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 20px;
+width: 500px;
+ margin-left:50px;    
 }
 
 .search-container input[type="text"] {
@@ -89,7 +103,7 @@ th, td {
 }
 
 .product-actions button {
-    background-color:#4CAF50;
+    background-color:#3d7676;
     color: #fff;
     border: none;
     padding: 8px 12px;
@@ -103,6 +117,9 @@ th, td {
 </style>
 </head>
 <body>
+<div class="back-icon-container">
+        <a href="adminPage.jsp"><i class='bx bx-arrow-back'></i></a>
+    </div>
     <form action="ViewProductServlet" method="get">
         <div class="search-container">
             <input type="text" name="searchQuery" id="searchInput" placeholder="Search...">

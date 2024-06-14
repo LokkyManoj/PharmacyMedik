@@ -42,7 +42,7 @@
     }
 
     button[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #3d7676;
         color: white;
         padding: 10px 20px;
         border: none;
@@ -51,7 +51,7 @@
     }
 
     button[type="submit"]:hover {
-        background-color: #45a049;
+        background-color:black;
     }
 </style>
 <meta charset="UTF-8">

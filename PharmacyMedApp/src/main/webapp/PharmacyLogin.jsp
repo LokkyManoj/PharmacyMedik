@@ -73,7 +73,7 @@
     }
 
     button:hover {
-        background-color: #0056b3;
+        background-color:black;
     }
 
     input:focus, button:focus {
@@ -111,7 +111,7 @@
         <form id="login" action="LoginServlet" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
                 <% String emailError = (String)request.getAttribute("emailError");
                 if (emailError != null) { %>
                     <div class="error-box"><%= emailError %></div> <!-- Display email error message -->
@@ -119,7 +119,7 @@
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
                 <% String passwordError = (String)request.getAttribute("passwordError");
                 if (passwordError != null) { %>
                     <div class="error-box"><%= passwordError %></div> <!-- Display password error message -->

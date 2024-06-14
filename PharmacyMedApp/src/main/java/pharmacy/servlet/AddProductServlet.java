@@ -10,7 +10,7 @@ import pharmacy.util.PharmacyUserDAO;
 
 @WebServlet("/AddImageServlet")
 @MultipartConfig(maxFileSize = 16177215) 
-public class AddImageServlet extends HttpServlet {
+public class AddProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

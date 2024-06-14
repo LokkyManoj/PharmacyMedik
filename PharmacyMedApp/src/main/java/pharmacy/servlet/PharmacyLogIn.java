@@ -1,7 +1,6 @@
 package pharmacy.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -58,7 +57,7 @@ public class PharmacyLogIn extends HttpServlet {
                     session.setAttribute("name", result.getString("name"));
 
                     if (email.endsWith("@medik.com")) {
-                        response.sendRedirect("ImageAdmin.jsp"); 
+                        response.sendRedirect("adminPage.jsp"); 
                     } else {
                         response.sendRedirect("PharmacyHome.jsp"); 
                     }

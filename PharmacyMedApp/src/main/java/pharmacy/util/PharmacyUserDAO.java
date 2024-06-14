@@ -319,5 +319,15 @@ public class PharmacyUserDAO {
 	            return rowsUpdated > 0;
 	        }
 	    }
+	    
+	    public boolean deleteCartItemsByUserId(int userId) throws SQLException, ClassNotFoundException {
+	        String sql = "DELETE FROM add_cart WHERE id = ?";
+	        try (Connection connection =PharmacyRegConnection.getConnection();
+	             PreparedStatement statement = connection.prepareStatement(sql)) {
+	            statement.setInt(1, userId);
+	            int rowsAffected = statement.executeUpdate();
+	            return rowsAffected > 0;
+	        }
+	    }
 	 
 }
