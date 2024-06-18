@@ -18,7 +18,6 @@ import pharmacy.model.CartItem;
 import pharmacy.model.Order;
 import pharmacy.model.PharmacyUserReg;
 import pharmacy.model.Product;
-import pharmacy.model.Order;
 import pharmacy.model.Payment;
 
 

@@ -134,7 +134,7 @@ main {
     box-shadow: 0 5px 3px -2px rgba(0, 0, 0, 0.7);
     padding: 10px;
     border-radius: 5px;
-    width: 200px;
+    width: 150px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color:white;
@@ -146,12 +146,12 @@ main {
     border-radius: 5px;
     object-fit: cover;
     max-width: 100%;
-    height: 150px;
+    height: 100px;
     object-fit: cover;
 }
 
 .card h3 {
-    font-size: 18px;
+    font-size: 11px;
     margin: 10px 0;
 }
 
@@ -202,7 +202,7 @@ footer {
                     <span>Easy Returns</span>
                 </div>
                 <form>
-                    <input type="text" placeholder="Search medicines/Healthcare products">
+                    <input type="text" class="searchy" placeholder="Search Medicines..............">
                     <button type="submit">Search</button>
                 </form>
             </div>
