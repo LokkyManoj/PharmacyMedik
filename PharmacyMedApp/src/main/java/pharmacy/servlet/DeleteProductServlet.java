@@ -21,8 +21,8 @@ public class DeleteProductServlet extends HttpServlet {
         System.out.println("delete post");
 
         try {
-        	PharmacyUserDAO dao = new PharmacyUserDAO();
-            boolean success = dao.deleteProduct(productId);
+            PharmacyUserDAO dao = new PharmacyUserDAO();
+            boolean success = dao.softDeleteProduct(productId);
             if (success) {
                 response.sendRedirect("ViewProductServlet");
             } else {

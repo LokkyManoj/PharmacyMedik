@@ -15,6 +15,7 @@ public class AddProductServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	HttpSession session=request.getSession();
         int productId = Integer.parseInt(request.getParameter("product_id"));
         String productName = request.getParameter("product_name");
         InputStream inputStream = null; 
@@ -30,6 +31,8 @@ public class AddProductServlet extends HttpServlet {
         String category = request.getParameter("product_category");
         String mfdDate = request.getParameter("mfd_date");
         String expDate = request.getParameter("exp_date");
+        
+       session.setAttribute("exp_date", expDate);
         
 
         String message = null; 

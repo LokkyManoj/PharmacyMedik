@@ -14,6 +14,7 @@ public class Product {
     private String category;
     private String mfdDate;
     private String expDate;
+    private int isDeleted;
 
     public Product(int productId, String productName, Blob productImage, int productQuantity, int productPrice,
                    String description, String uses, String contains, String category, String mfdDate, String expDate) {
@@ -28,6 +29,7 @@ public class Product {
         this.category = category;
         this.mfdDate = mfdDate;
         this.expDate = expDate;
+        this.isDeleted = isDeleted;
     }
 
 	public int getProductId() {
@@ -118,7 +120,6 @@ public class Product {
 		this.expDate = expDate;
 	}
 
-    // Getters
 	public Product() {
 	}
 

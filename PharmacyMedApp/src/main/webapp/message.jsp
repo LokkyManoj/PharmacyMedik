@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Message</title>
+    <title>Medik Pharmacy</title>
 </head>
 <body>
     <h2>${Message}</h2>

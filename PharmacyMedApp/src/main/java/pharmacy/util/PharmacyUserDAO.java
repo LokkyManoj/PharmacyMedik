@@ -42,42 +42,7 @@ public class PharmacyUserDAO {
 		}
 	}
 
-	public List<Product> getProducts(String searchQuery) throws ClassNotFoundException, SQLException {
-		List<Product> products = new ArrayList<>();
-		String sql = "SELECT * FROM pharmacy_admin";
-		if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-			sql += " WHERE product_name LIKE ?";
-		}
-
-		try (Connection connection = PharmacyRegConnection.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-			if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-				preparedStatement.setString(1, "%" + searchQuery + "%");
-			}
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-	                
-					int productId = resultSet.getInt("product_id");
-					String productName = resultSet.getString("product_name");
-					Blob productImage = resultSet.getBlob("product_image");
-					int productQuantity = resultSet.getInt("product_quantity");
-					int productPrice = resultSet.getInt("product_price");
-					String description = resultSet.getString("description");
-					String uses = resultSet.getString("uses");
-					String contains = resultSet.getString("contains");
-					String category = resultSet.getString("product_category");
-					String mfdDate = resultSet.getString("mfd_date");
-					String expDate = resultSet.getString("exp_date");
-
-					products.add(new Product(productId, productName, productImage, productQuantity, productPrice,
-							description, uses, contains, category, mfdDate, expDate));
-				}
-			}
-		}
-		return products;
-	}
+	
 
 	public boolean addProduct(int productId, String productName, InputStream productImage, int productQuantity,
 			int productPrice, String description, String uses, String contains, String category, String mfdDate,
@@ -165,14 +130,15 @@ public class PharmacyUserDAO {
 	        }
 	    }
 	 
-	 public List<Product> getProductsByCategory(String category,HttpServletRequest request) throws ClassNotFoundException, SQLException {
+	 public List<Product> getProductsByCategory(String category,int isDeleted,HttpServletRequest request) throws ClassNotFoundException, SQLException {
 	        List<Product> products = new ArrayList<>();
 
-	        String sql = "SELECT * FROM pharmacy_admin WHERE product_category = ?";
+	        String sql = "SELECT * FROM pharmacy_admin WHERE product_category = ? and  is_deleted=?";
 	        try (Connection conn = PharmacyRegConnection.getConnection();
 	             PreparedStatement statement = conn.prepareStatement(sql)) {
 
 	            statement.setString(1, category);
+	            statement.setInt(2, isDeleted);
 
 	            try (ResultSet resultSet = statement.executeQuery()) {
 	                while (resultSet.next()) {
@@ -327,6 +293,62 @@ public class PharmacyUserDAO {
 	            statement.setInt(1, userId);
 	            int rowsAffected = statement.executeUpdate();
 	            return rowsAffected > 0;
+	        }
+	    }
+	    
+	    public boolean updateCartQuantity(int cartId, int quantity) throws ClassNotFoundException, SQLException {
+	        String sql = "UPDATE add_cart SET quantity = ? WHERE cart_id = ?";
+	        try (Connection connection = PharmacyRegConnection.getConnection();
+	             PreparedStatement statement = connection.prepareStatement(sql)) {
+	            statement.setInt(1, quantity);
+	            statement.setInt(2, cartId);
+	            int rowsUpdated = statement.executeUpdate();
+	            return rowsUpdated > 0;
+	        }
+	    }
+	    
+	    public boolean softDeleteProduct(int productId) throws SQLException, ClassNotFoundException {
+	        String sql = "UPDATE pharmacy_admin SET is_deleted = 1 WHERE product_id = ?";
+	        try (Connection conn = PharmacyRegConnection.getConnection();
+	             PreparedStatement stmt = conn.prepareStatement(sql)) {
+	            stmt.setInt(1, productId);
+	            int rowsUpdated = stmt.executeUpdate();
+	            return rowsUpdated > 0;
+	        }
+	    }
+	    
+	    public List<Product> getProducts(String searchQuery) throws SQLException, ClassNotFoundException {
+	        String sql = "SELECT * FROM pharmacy_admin WHERE is_deleted = 0";
+	        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+	            sql += " AND product_name LIKE ?";
+	        }
+
+	        try (Connection conn = PharmacyRegConnection.getConnection();
+	             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+	                stmt.setString(1, "%" + searchQuery + "%");
+	            }
+
+	            ResultSet rs = stmt.executeQuery();
+	            List<Product> products = new ArrayList<>();
+	            while (rs.next()) {
+	                Product product = new Product(
+	                    rs.getInt("product_id"),
+	                    rs.getString("product_name"),
+	                    rs.getBlob("product_image"),
+	                    rs.getInt("product_quantity"),
+	                    rs.getInt("product_price"),
+	                    rs.getString("description"),
+	                    rs.getString("uses"),
+	                    rs.getString("contains"),
+	                    rs.getString("product_category"),
+	                    rs.getString("mfd_date"),
+	                    rs.getString("exp_date")
+	                );
+	                products.add(product);
+	            }
+	            return products;
 	        }
 	    }
 	 

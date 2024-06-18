@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Medik Pharmacy</title>
 </head>
 <body>
 <h1>Order Placed Successfully</h1>
+
+<center><a href="PharmacyMainServlet">Back to Main Page</a></center>
 </body>
 </html>

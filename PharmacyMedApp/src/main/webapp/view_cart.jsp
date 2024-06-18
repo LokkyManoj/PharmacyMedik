@@ -13,12 +13,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>View Cart</title>
+<title>Medik Pharmacy</title>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style>
     body {
         font-family: Arial, sans-serif;
-        background-color: #f8f8f8;
+background-color:#b2f9ff; 
         margin: 0;
         padding: 20px;
     }
@@ -112,7 +112,7 @@
         cursor: pointer;
         z-index: 9999;
     }
-.delete-btn {
+    .delete-btn {
         background-color: transparent;
         color: #dc3545;
         border: none;
@@ -121,22 +121,44 @@
         transition: color 0.3s ease;
     }
     
-   .delete-btn:hover {
+    .delete-btn:hover {
         color: #060707;
     }
-    .delete-btn img{
-    height: 15px;
+    .delete-btn img {
+        height: 15px;
+    }
+    .update-quantity {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .update-quantity input[type="number"] {
+        width: 60px;
+        padding: 5px;
+        margin-right: 5px;
+    }
+    .update-quantity button {
+        background-color:#3d7676;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .update-quantity button:hover {
+        background-color:black;
     }
 </style>
   <%int total=0; %>
 </head>
 <body>
-    <a href="PharmacyMainServlet" class="back-icon"><i class='bx bx-arrow-back'></i></a>
+    <a href="PharmacyHome.jsp" class="back-icon"><i class='bx bx-arrow-back'></i></a>
 
     <h2>Your Cart</h2>
     <div class="container">
-        <%   Order order = new Order();
- 
+        <%   
+        Order order = new Order();
         List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
         if (cartItems != null && !cartItems.isEmpty()) {
             for (CartItem item : cartItems) {
@@ -169,27 +191,31 @@
             %>
           
             <div class="product-info">
-        
                 <p><strong>Price:</strong> Rs.<%= item.getProductPrice() %></p>
-                <p><strong>Quantity:</strong> <%= item.getQuantity() %></p>
-               <input type="hidden" value= <%= total+=(item.getProductPrice() * item.getQuantity()) %>>
+                <p><strong>Quantity:</strong> <%-- <%= item.getQuantity() %> --%></p>
+                <div class="update-quantity">
+                    <form action="UpdateCartServlet" method="post">
+                        <input type="hidden" name="cartId" value="<%= item.getCartId() %>" />
+                        <input type="number" name="quantity" value="<%= item.getQuantity() %>" min="1" />
+                        <button type="submit">✔</button>
+                    </form>
+                </div>
+                <input type="hidden" value= <%= total+=(item.getProductPrice()*item.getQuantity()) %>>
                 <p><strong>Total Price:</strong> Rs.<%= item.getProductPrice() * item.getQuantity() %></p>
             </div> 
             <div class="product-actions">
                 <form action="OrderProductServlet" method="post">
-                <input type="hidden" name="action" value="buy">
-                <input type="hidden" name="total" value=<%= item.getProductPrice() * item.getQuantity() %>>
-                <button type="submit">Buy</button>
+                    <input type="hidden" name="action" value="buy">
+                    <input type="hidden" name="total" value=<%= item.getProductPrice() * item.getQuantity() %>>
+                    <button type="submit">Buy</button>
                 </form>
                 <form action="RemoveFromCartServlet" method="post">
-                 <input type="hidden" name="productId" value="<%= item.getProductId() %>">
-        <button type="submit" class="delete-btn">
-                <img src="images1/dustbin.png" alt="Delete" width="20" height="20">
-            </button>
-           
+                    <input type="hidden" name="productId" value="<%= item.getProductId() %>">
+                    <button type="submit" class="delete-btn">
+                        <img src="images1/dustbin.png" alt="Delete" width="20" height="20">
+                    </button>
                 </form>
             </div>
-           
         </div>
         <%
             }
@@ -200,14 +226,13 @@
         }
         %>
     </div>
-            <center> <p>Total Amount :<%=total %></p></center> 
-              
-               <div class="product-actions">
-                <form action="OrderProductServlet" method="post">
-                <input type="hidden" name="action" value="buy">
-                <input type="hidden" name="total" value=<%= total %>>
-                <button type="submit">Buy Now</button>
-                </form>
-    
+    <center><p>Total Amount: Rs.<%= total %></p></center> 
+    <div class="product-actions" style="text-align: center;">
+        <form action="OrderProductServlet" method="post">
+            <input type="hidden" name="action" value="buy">
+            <input type="hidden" name="total" value=<%= total %>>
+            <button type="submit">Buy Now</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -1,199 +1,198 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="javax.servlet.http.*, javax.servlet.*"%>
+<%-- <%
+session=request.getSession(false);
+if(session == null) {
+    response.sendRedirect("PharmacyLogin.jsp");
+    return;
+}
+%> --%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Medik Pharmacy</title>
-    <style>
-    body {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medik Pharmacy</title>
+<style>
+body {
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    background:url('images1/medbg1.jpg');
+	 background-repeat: no-repeat;
+  background-size: cover;
+   background-position: center;
+  min-height: 100vh;
 }
 
-h2 {
-    color: #333;
-    text-align: center;
-}
-
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    margin: 0 auto;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input[type="text"],
-input[type="number"],
-textarea {
-    width: calc(100% - 20px);
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-input[type="file"] {
-    width: calc(100% - 20px);
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-input[type="submit"] {
-    background-color:#3d7676;
-    color: white;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color:black;
-}
-
-a {
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-    text-decoration: none;
-    color: #333;
-}
-
-a:hover {
-    text-decoration: underline;
+   background-color:#83d4eb;
+	border-bottom: 1px solid black;
 }
 
 .logo-container {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .logo {
-	height: 50px;
-	margin-right: 10px;
+    height: 50px;
+    margin-right: 10px;
 }
 
 .logo1 {
-	height: 50px;
-	margin-left:-30px;
-	margin-bottom:20px
+    height: 50px;
+    margin-left: -30px;
+    margin-bottom: 20px;
 }
+
+h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        sans-serif;
+    font-size: 24px;
+    margin: 0;
+}
+
 .top-nav ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
 }
 
 .top-nav a {
-	text-decoration: none;
-	color: black;
-	font-size: 16px;
-	display: flex;
-	align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
 }
 
 .top-nav img {
-	margin-right: 5px;
-	height: 20px;
+    margin-right: 5px;
+    height: 20px;
 }
 
 .top-nav a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
-    body {
-	font-family: 'Gill Sans', sans-serif;
-	margin: 0;
-	padding: 0;
+.cart {
+    position: relative;
 }
-    
-    </style>
+
+.cart img {
+    height: 25px;
+}
+
+main {
+    padding: 20px;
+}
+
+.category-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.card {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    justify-content: center;
+	gap: 50px;
+	flex-wrap: wrap;
+	margin-top: 20px;
+}
+
+.card img {
+    border-radius: 5px;
+    object-fit: cover;
+    max-width: 100%;
+    height: 150px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    cursor:pointer;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    background-color: #e9ecef;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+    width: 100%;
+}
+</style>
 </head>
-
 <body>
-  
-    <header>
-    			<div class="logo-container">
-				<img src="images1/pharmlogo2.png" alt="Pharmacy Logo" class="logo">
-				<img src="images1/MedikLogo.png" alt="Medik Logo" class="logo1">
-			</div>
-			<nav class="top-nav">
-				<ul>
-					<%
-					if (session.getAttribute("email") != null) {
-					%>
-					<li><a href="#"><img src="images1/hii2.png"
-							alt="HiIn Icon">Hello <%=session.getAttribute("name")%></a></li>
-					
-					<%
-					} else {
-					%>
-					<li><a href="PharmacyReg.jsp"><img
-							src="images1/Registericon2.png" alt="SignIn Icon">SignIn</a></li>
-					<li><a href="PharmacyLogin.jsp"><img
-							src="images1/Loginicon2.png" alt="LogIn Icon">LogIn</a></li>
-					<%
-					}
-					%>
-	
-				</ul>
-			</nav>
-    
-    </header>
-        <form action="AddImageServlet" method="post" enctype="multipart/form-data">
-    
-        <label for="product_id">Product ID:</label>
-        <input type="number" id="product_id" name="product_id" required min=1><br><br>
+    <form action="FirstServlet" method="get">
+        <header>
 
-        <label for="product_name">Product Name:</label>
-        <input type="text" id="product_name" name="product_name" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required><br><br>
+            <div class="logo-container">
+                <img src="images1/pharmlogo2.png" alt="Pharmacy Logo" class="logo">
+                <img src="images1/MedikLogo.png" alt="Medik Logo" class="logo1">
+            </div>
+            <nav class="top-nav">
+                <ul>
+                    <%
+                    if (session.getAttribute("email") != null) {
+                    %>
+                    <li><a href="#"><img src="images1/hii2.png"
+                            alt="HiIn Icon">Hello <%=session.getAttribute("name")%></a></li>
+                    <li><a href="LogoutServlet" class="logout-btn"><img
+                            src="images1/logouticon.png" alt="Logout Icon">Logout</a></li>
+                    <%
+                    } else {
+                    %>
+                    <li><a href="PharmacyReg.jsp"><img
+                            src="images1/Registericon2.png" alt="SignIn Icon">SignUp</a></li>
+                    <li><a href="PharmacyLogin.jsp"><img
+                            src="images1/Loginicon2.png" alt="LogIn Icon">LogIn</a></li>
+                    <%
+                    }
+                    %>
+                </ul>
+            </nav>
+        </header>
 
-        <label for="product_image">Product Image:</label>
-        <input type="file" id="product_image" name="product_image" accept="image/*" required><br><br>
-
-        <label for="product_quantity">Product Quantity:</label>
-        <input type="number" id="product_quantity" name="product_quantity" required min=1><br><br>
-
-        <label for="product_price">Product Price:</label>
-        <input type="number" id="product_price" name="product_price" required min=1><br><br>
-        
-         <label for="product_category">Product Category:</label>
-        <input type="text" id="product_category" name="product_category" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required><br><br>
-        
-         <label for="mfd_date">Mfd Date:</label>
-        <input type="date" id="mfd_date" name="mfd_date" required><br><br>
-        
-        <label for="exp_date">Exp Date:</label>
-        <input type="date" id="exp_date" name="exp_date" required><br><br>
-        
-
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" maxlength="900"  required></textarea><br><br>
-
-        <label for="uses">Uses:</label>
-        <textarea id="uses" name="uses" maxlength="900" pattern="[A-Za-z\s]+" title="Please enter only letters (A-Z, a-z) and spaces" required></textarea><br><br>
-
-        <label for="contains">Contains:</label>
-        <textarea id="contains" name="contains" maxlength="900"  required></textarea><br><br>
-
-       <center> <input type="submit" value="Add Product"></center>
-        <a href="ViewProductServlet">View the Products</a>
+        <main>
+            <div class="category-cards">
+                <div class="card">
+                    <a href="addProducts.jsp"><img src="images1/pharmlogo2.png" alt="Add Product"></a>
+                    <h3>Add Products</h3>
+                </div>
+                
+                <div class="card">
+                    <a href="ViewProductServlet"><img src="images1/pharmlogo2.png" alt="Add Product"></a>
+                    <h3>View Products</h3>
+                </div>
+                
+                <!-- <div class="card">
+                    <a href=""><img src="images1/pharmlogo2.png" alt="Add Product"></a>
+                    <h3>Expired Products</h3>
+                </div> -->
+            </div>
+        </main>
     </form>
-    
-    
 </body>
 </html>

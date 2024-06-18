@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,12 +21,21 @@ public class PharmacyMainServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("id");
+
+        if (userId == null) {
+            response.sendRedirect("PharmacyLogin.jsp");
+            return;
+        }
         List<Product> products = new ArrayList<>();
         PharmacyUserDAO productDAO = new PharmacyUserDAO();
 
         try {
             String category = "Medicine";
-            products = productDAO.getProductsByCategory(category, request);
+            int isDeleted = 0;
+            products = productDAO.getProductsByCategory(category,isDeleted, request);
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
             request.setAttribute("Message", "ERROR: " + ex.getMessage());

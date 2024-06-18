@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Success</title>
+    <title>Medik Pharmacy</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color:#b2f9ff;
             color: #333;
         }
 
@@ -149,7 +149,7 @@
     </style>
 </head>
 <body>
-    <form action="PaymentServlet" method="post">
+    <form action="PlaceOrderAndDeleteCartServlet" method="get">
         <div>
             <label for="amount">Amount:</label>
             <input type="text" id="amount" name="amountDisplay" value="${sessionScope.total}" readonly>
@@ -179,11 +179,12 @@
             </div>
         </div>
         <div>
-        <form action="PlaceOrderAndDeleteCartServlet" method="get">
             <button type="submit" name="action" value="placeOrder">Continue</button>
-            </form>
         </div>
     </form>
+    
+    
+    
 
     <div id="cardFormSidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeCardForm()">&times;</a>

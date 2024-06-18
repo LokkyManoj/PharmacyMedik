@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Medik Pharmacy</title>
 <style>
     body {
         font-family: Arial, sans-serif;

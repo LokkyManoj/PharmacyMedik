@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import pharmacy.model.PharmacyUserReg;
 import pharmacy.util.PharmacyUserDAO;
 
@@ -32,6 +33,8 @@ public class FirstServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		
 		System.out.println("Hiii");
 	    String name = request.getParameter("name");
         long mobileNo = Long.parseLong(request.getParameter("mobileNumber"));
@@ -47,8 +50,7 @@ public class FirstServlet extends HttpServlet {
         PharmacyUserDAO userDao = new PharmacyUserDAO();
         try {
             userDao.saveUser(user);
-            response.getWriter().write("User registered successfully!");
-            
+            response.sendRedirect("PharmacyLogin.jsp");            
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             response.getWriter().write("Error occurred while registering user.");

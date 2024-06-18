@@ -5,11 +5,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Order Status</title>
+    <title>Medik Pharmacy</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color:#b2f9ff;
             margin: 0;
             padding: 0;
             display: flex;
@@ -18,7 +18,8 @@
             height: 100vh;
         }
         .order-status {
-            background-color: #fff;
+                    background-color:#97a1a2;
+        
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -52,6 +53,9 @@
             margin-top: 20px;
             display: flex;
             flex-direction: column;
+                       
+            
+            
         }
         .form-group label {
             font-weight: bold;
@@ -66,7 +70,7 @@
         .form-group button {
             margin-top: 20px;
             padding: 10px;
-            background-color: #007bff;
+            background-color:#3d7676;
             border: none;
             border-radius: 5px;
             color: #fff;
@@ -74,7 +78,7 @@
             cursor: pointer;
         }
         .form-group button:hover {
-            background-color: #0056b3;
+            background-color:black;
         }
     </style>
 </head>
@@ -92,12 +96,12 @@
                 <span><%= request.getAttribute("expectedDeliveryDate") %></span>
             </div>
             <div class="order-item">
-                <label>Status:</label>
+                <label>Order Status:</label>
                 <span>Pending</span>
             </div>
             <div class="order-item">
-                <label>Product Quantity:</label>
-                <span><%= request.getAttribute("quantity") %></span>
+                <label>Total Quantity:</label>
+                <span><%= request.getAttribute("totalQuantity") %></span>
             </div>
             <div class="order-item">
                 <label>Total Price:</label>

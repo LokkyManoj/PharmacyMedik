@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Payment Success</title>
+    <title>Medik Pharmacy</title>
 </head>
 <body>
     <h2>Payment Successful</h2>

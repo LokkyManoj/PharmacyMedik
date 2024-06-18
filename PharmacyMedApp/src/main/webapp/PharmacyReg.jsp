@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In</title>
+<title>Medik Pharmacy</title>
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
 
@@ -99,19 +99,19 @@ input::placeholder {
 		<form action="FirstServlet" method="post">
 			<div class="form-group">
 				<label for="name">Name</label> <input type="text" id="name"
-					name="name" required>
+					name="name" placeholder="Name" required>
 			</div>
 			<div class="form-group">
 				<label for="mobileNumber">Mobile Number</label> <input type="tel"
-					id="mobileNumber" name="mobileNumber" required pattern="[0-9]{10}">
+					id="mobileNumber" name="mobileNumber" placeholder="MobileNumber" required pattern="[0-9]{10}">
 			</div>
 			<div class="form-group">
 				<label for="email">Email</label> <input type="email" id="email"
-					name="email" required>
+					name="email" placeholder="Email" required>
 			</div>
 			<div class="form-group">
 				<label for="password">Password</label> <input type="password"
-					id="password" name="password" required>
+					id="password" name="password" placeholder="Password" required>
 			</div>
 			<br>
 			<button type="submit">Sign In</button>

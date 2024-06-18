@@ -11,16 +11,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Medik Pharmacy</title>
+<title>Medik Pharmacy - Expired Products</title>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style>
-body {
-        font-family: Arial, sans-serif;
-background-color:#b2f9ff; 
-        margin: 0;
-        padding: 20px;
-    }
-
 .back-icon-container {
     position: absolute;
     top: 20px;
@@ -46,7 +39,6 @@ background-color:#b2f9ff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 45%;
     box-sizing: border-box;
-    background-color: #ffffff;
 }
 
 .product-card img {
@@ -134,7 +126,7 @@ width: 500px;
                 <i class='bx bx-search-alt'></i>
             </button>
         </div>
-        <h2>Products List</h2>
+        <h2>Expired Products List</h2>
         <div class="container">
             <%
             List<Product> products = (List<Product>) request.getAttribute("products");
@@ -201,23 +193,13 @@ width: 500px;
                             <td><%=product.getExpDate()%></td>
                         </tr>
                     </table>
-                    <div class="product-actions">
-                        <form action="UpdateProductServlet" method="get" style="display:inline;">
-                            <input type="hidden" name="productId" value="<%=product.getProductId()%>">
-                            <button  type="submit">Update</button>
-                         </form> 
-                        <form action="DeleteProductServlet" method="post" style="display:inline;">
-                            <input type="hidden" name="productId" value="<%=product.getProductId()%>">
-                            <button type="submit" class="delete">Delete</button>
-                        </form>
-                    </div>
                 </div>
             </div>
             <%
             }
             } else {
             %>
-            <p>No products available.</p>
+            <p>No expired products available.</p>
             <%
             }
             %>

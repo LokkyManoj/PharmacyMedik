@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import pharmacy.model.CartItem;
 import pharmacy.model.Order;
 import pharmacy.util.PharmacyUserDAO;
 
@@ -25,11 +27,20 @@ public class OrderProductServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         if ("buy".equals(action)) {
+        	
+        	List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+            int totalQuantity = 0;
+            int total = 0;
+
+            for (CartItem item : cartItems) {
+                totalQuantity += item.getQuantity();
+                total += item.getProductPrice() * item.getQuantity();
+            }
             int productId = (int) session.getAttribute("product_id");
             System.out.println(productId);
             int userId = (int) session.getAttribute("id");
             int quantity = (int) session.getAttribute("quantity");
-            int total=Integer.parseInt(request.getParameter("total"));
+             total=Integer.parseInt(request.getParameter("total"));
             
             String status = "Pending";
             Date orderDate = Date.valueOf(LocalDate.now());
@@ -41,6 +52,7 @@ public class OrderProductServlet extends HttpServlet {
             request.setAttribute("status", status);
             session.setAttribute("total", total);
             request.setAttribute("total", total);
+            request.setAttribute("totalQuantity", totalQuantity);
             
             request.setAttribute("orderDate", orderDate);
             request.setAttribute("expectedDeliveryDate", expectedDeliveryDate);
