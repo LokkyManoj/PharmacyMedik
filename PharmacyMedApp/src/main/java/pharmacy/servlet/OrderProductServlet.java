@@ -20,7 +20,8 @@ import pharmacy.util.PharmacyUserDAO;
 @WebServlet("/OrderProductServlet")
 public class OrderProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    private static final String EXPECTED_DELIVERY_DATE = "expectedDeliveryDate";
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -37,7 +38,6 @@ public class OrderProductServlet extends HttpServlet {
                 total += item.getProductPrice() * item.getQuantity();
             }
             int productId = (int) session.getAttribute("product_id");
-            System.out.println(productId);
             int userId = (int) session.getAttribute("id");
             int quantity = (int) session.getAttribute("quantity");
              total=Integer.parseInt(request.getParameter("total"));
@@ -55,7 +55,7 @@ public class OrderProductServlet extends HttpServlet {
             request.setAttribute("totalQuantity", totalQuantity);
             
             request.setAttribute("orderDate", orderDate);
-            request.setAttribute("expectedDeliveryDate", expectedDeliveryDate);
+            request.setAttribute(EXPECTED_DELIVERY_DATE, expectedDeliveryDate);
 
 
             getServletContext().getRequestDispatcher("/order.jsp").forward(request, response);
@@ -65,8 +65,8 @@ public class OrderProductServlet extends HttpServlet {
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             String status = request.getParameter("status");
             Date orderDate = Date.valueOf(request.getParameter("orderDate"));
-            Date expectedDeliveryDate = Date.valueOf(request.getParameter("expectedDeliveryDate"));
-            session.setAttribute("expectedDeliveryDate",expectedDeliveryDate );
+            Date expectedDeliveryDate = Date.valueOf(request.getParameter(EXPECTED_DELIVERY_DATE));
+            session.setAttribute(EXPECTED_DELIVERY_DATE,expectedDeliveryDate );
             String address = request.getParameter("address");
            session.setAttribute("address", address);
 

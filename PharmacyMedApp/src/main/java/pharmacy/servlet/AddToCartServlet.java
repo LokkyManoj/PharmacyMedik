@@ -14,7 +14,7 @@ import pharmacy.util.PharmacyUserDAO;
 @WebServlet("/AddToCartServlet")
 public class AddToCartServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -22,6 +22,7 @@ public class AddToCartServlet extends HttpServlet {
         int productId = Integer.parseInt(request.getParameter("product_id"));
         int userId = Integer.parseInt(request.getParameter("user_id"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
+        
 
         try {
         	PharmacyUserDAO dao = new PharmacyUserDAO();

@@ -2,7 +2,8 @@
 <%@ page import ="pharmacy.model.Order"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Medik Pharmacy</title>

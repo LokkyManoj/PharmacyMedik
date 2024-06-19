@@ -18,7 +18,7 @@ import pharmacy.util.PharmacyUserDAO;
 @WebServlet("/PaymentServlet")
 public class PaymentServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -48,7 +48,6 @@ public class PaymentServlet extends HttpServlet {
 
                 if (success) {
                     session.setAttribute("product_name", productName);
-                    System.out.println(productName);
                     session.setAttribute("amount", amount);
                     session.setAttribute("expectedDeliveryDate", expectedDeliveryDate);
                     session.setAttribute("address", address);

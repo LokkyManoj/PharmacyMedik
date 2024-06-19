@@ -15,7 +15,8 @@ import java.sql.SQLException;
 @WebServlet("/PlaceOrderServlet")
 public class PlaceOrderServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    private static final String MESSAGE = "message";
+@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -35,18 +36,18 @@ public class PlaceOrderServlet extends HttpServlet {
                         session.setAttribute("amount", total);
                         response.sendRedirect("lastPage.jsp");
                     } else {
-                        request.setAttribute("message", "Failed to update product quantity");
+                        request.setAttribute(MESSAGE, "Failed to update product quantity");
                         response.sendRedirect("error.jsp");
                     }
                 } else {
-                    request.setAttribute("message", "Insufficient product quantity");
-                    response.sendRedirect("error.jsp");                }
+                    request.setAttribute(MESSAGE, "Insufficient product quantity");
+                                    }
             } else {
-                request.setAttribute("message", "Product not found");
-                response.sendRedirect("error.jsp");            }
+                request.setAttribute(MESSAGE, "Product not found");
+                            }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
-            request.setAttribute("message", "ERROR: " + ex.getMessage());
-            response.sendRedirect("error.jsp");        }
+            request.setAttribute(MESSAGE, "ERROR: " + ex.getMessage());
+                   }
     }
 }

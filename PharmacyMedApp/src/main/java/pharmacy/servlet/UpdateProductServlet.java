@@ -13,7 +13,7 @@ import pharmacy.model.Product;
 @WebServlet("/UpdateProductServlet")
 public class UpdateProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int productId = Integer.parseInt(request.getParameter("productId"));
@@ -58,7 +58,7 @@ public class UpdateProductServlet extends HttpServlet {
 
 		getServletContext().getRequestDispatcher("/update_product.jsp").forward(request, response);
 	}
-
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int productId = Integer.parseInt(request.getParameter("productId"));

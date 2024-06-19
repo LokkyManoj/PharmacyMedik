@@ -1,6 +1,5 @@
 package pharmacy.servlet;
 
-import pharmacy.model.Payment;
 import pharmacy.model.Product;
 import pharmacy.util.PharmacyUserDAO;
 
@@ -11,21 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 @WebServlet("/PlaceOrderAndDeleteCartServlet")
 public class PlaceOrderAndDeleteCartServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final String ERROR_PAGE = "error.jsp";
+    private static final String MESSAGE = "message";
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int productId = (int) session.getAttribute("product_id");
-        int cartId = (int) session.getAttribute("cartId");
-        int quantity = (int) session.getAttribute("quantity");
-        int total = (int) session.getAttribute("total");
         Integer userId = (Integer) session.getAttribute("id");
 
         if (userId == null) {
@@ -33,59 +29,46 @@ public class PlaceOrderAndDeleteCartServlet extends HttpServlet {
             return;
         }
 
+        int productId = (int) session.getAttribute("product_id");
+        int quantity = (int) session.getAttribute("quantity");
+        int total = (int) session.getAttribute("total");
+
         PharmacyUserDAO dao = new PharmacyUserDAO();
+
         try {
             Product product = dao.getProductById(productId);
             if (product != null) {
                 int newQuantity = product.getProductQuantity() - quantity;
                 if (newQuantity >= 0) {
-                    boolean updateSuccess = dao.updateProductQuantity(productId, newQuantity);
+                    boolean updateSuccess = updateProductAndDeleteCart(dao, productId, userId, newQuantity);
                     if (updateSuccess) {
-                        boolean deleteSuccess = dao.deleteCartItemsByUserId(userId);
-                        if (deleteSuccess) {
-                            // Process payment
-                            Date paymentDate = Date.valueOf(LocalDate.now());
-                            String paymentMethod = (String) session.getAttribute("paymentMethod");
-                            if (paymentMethod == null) {
-                                paymentMethod = request.getParameter("paymentMethod"); // Get from request if not in session
-                            }
-
-                            Payment payment = new Payment();
-                            payment.setPaymentDate(paymentDate);
-                            payment.setPaymentMethod(paymentMethod);
-                            payment.setAmount(total);
-                            payment.setUserId(userId);
-                            payment.setProductId(productId);
-
-                            boolean paymentSuccess = dao.payment(payment);
-
-                            if (paymentSuccess) {
-                                session.setAttribute("amount", total);
-                                response.sendRedirect("lastPage.jsp");
-                            } else {
-                                request.setAttribute("message", "Payment failed");
-                                response.sendRedirect("error.jsp");
-                            }
-                        } else {
-                            request.setAttribute("message", "Failed to delete cart items");
-                            response.sendRedirect("error.jsp");
-                        }
+                        response.sendRedirect("lastPage.jsp");
                     } else {
-                        request.setAttribute("message", "Failed to update product quantity");
-                        response.sendRedirect("error.jsp");
+                        request.setAttribute(MESSAGE, "Failed to process order");
+                        response.sendRedirect(ERROR_PAGE);
                     }
                 } else {
-                    request.setAttribute("message", "Insufficient product quantity");
-                    response.sendRedirect("error.jsp");
+                    request.setAttribute(MESSAGE, "Insufficient product quantity");
+                    response.sendRedirect(ERROR_PAGE);
                 }
             } else {
-                request.setAttribute("message", "Product not found");
-                response.sendRedirect("error.jsp");
+                request.setAttribute(MESSAGE, "Product not found");
+                response.sendRedirect(ERROR_PAGE);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
-            request.setAttribute("message", "ERROR: " + ex.getMessage());
-            response.sendRedirect("error.jsp");
+            request.setAttribute(MESSAGE, "ERROR: " + ex.getMessage());
+            response.sendRedirect(ERROR_PAGE);
         }
+    }
+
+    private boolean updateProductAndDeleteCart(PharmacyUserDAO dao, int productId, int userId, int newQuantity)
+            throws SQLException, ClassNotFoundException {
+        boolean updateSuccess = dao.updateProductQuantity(productId, newQuantity);
+        if (updateSuccess) {
+            boolean deleteSuccess = dao.deleteCartItemsByUserId(userId);
+            return deleteSuccess;
+        }
+        return false;
     }
 }

@@ -22,17 +22,16 @@ public class RemoveFromCartServlet extends HttpServlet {
        
     }
 
-	
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-
+    @Override
 	    protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	        HttpSession session = request.getSession();
 	        int cartId=(Integer) session.getAttribute("cartId");
-	        System.out.println("cartId:"+cartId);
 
 	        PharmacyUserDAO cartItemDAO = new PharmacyUserDAO();
 
@@ -40,9 +39,7 @@ public class RemoveFromCartServlet extends HttpServlet {
 	            boolean removed = cartItemDAO.removeFromCart(cartId);
 	            if (removed) {
 	                response.sendRedirect("ViewCartServlet");
-	            } else {
-	                
-	            }
+	            } 
 	        } catch (SQLException | ClassNotFoundException ex) {
 	            ex.printStackTrace();
 	            request.setAttribute("message", "ERROR: " + ex.getMessage());

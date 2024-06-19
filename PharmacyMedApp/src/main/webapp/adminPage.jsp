@@ -187,10 +187,7 @@ footer {
                     <h3>View Products</h3>
                 </div>
                 
-                <!-- <div class="card">
-                    <a href=""><img src="images1/pharmlogo2.png" alt="Add Product"></a>
-                    <h3>Expired Products</h3>
-                </div> -->
+              
             </div>
         </main>
     </form>

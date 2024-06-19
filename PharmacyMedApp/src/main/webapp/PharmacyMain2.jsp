@@ -14,7 +14,6 @@
 <title>Medik Pharmacy</title>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style>
-/* Your CSS styles */
 body {
     font-family: 'Gill Sans', sans-serif;
     margin: 0;
@@ -258,7 +257,7 @@ button {
             int id = (int) session.getAttribute("id");
             %>
             <div class="product-actions">
-                <form action="AddToCartServlet" class="add-to-cart-form" method="post" style="display: inline;">
+                <form action="AddToCartServlet2" class="add-to-cart-form" method="post" style="display: inline;">
                     <input type="hidden" name="product_id" value="<%=product.getProductId()%>">
                     <input type="hidden" name="user_id" value="<%=id%>">
                     <input type="number" name="quantity" min="1" max="<%=product.getProductQuantity()%>" value="1">

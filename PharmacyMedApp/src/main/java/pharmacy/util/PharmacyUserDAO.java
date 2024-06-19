@@ -3,11 +3,9 @@ package pharmacy.util;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ import pharmacy.model.Product;
 import pharmacy.model.Payment;
 
 
-import pharmacy.util.PharmacyRegConnection;
+
 
 public class PharmacyUserDAO {
 
@@ -37,7 +35,6 @@ public class PharmacyUserDAO {
 			preparedStatement.setString(4, user.getPassword());
 
 			int rowsAffected = preparedStatement.executeUpdate();
-			System.out.println("Rows affected: " + rowsAffected);
 		}
 	}
 
@@ -89,32 +86,7 @@ public class PharmacyUserDAO {
 		}
 	}
 	
-//	public void retrieveCart(int cartId,HttpServletRequest request) throws ClassNotFoundException, SQLException {
-//        String sql = "SELECT * FROM add_cart WHERE cart_id = ?";
-//
-//        try (Connection connection = PharmacyRegConnection.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//
-//            preparedStatement.setInt(1, cartId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//            	HttpSession session = request.getSession();
-//                session.setAttribute("cart_id", resultSet.getInt("cart_id"));
-//                int retrievedCartId = resultSet.getInt("cart_id");
-//                System.out.println("cartId :"+retrievedCartId);
-//                int quantity = resultSet.getInt("quantity");
-//                int userId = resultSet.getInt("id");
-//                int productId = resultSet.getInt("product_id");
-//
-//                // Now you can use the retrieved values as needed
-//                System.out.println("Cart ID: " + retrievedCartId);
-//                System.out.println("Quantity: " + quantity);
-//                System.out.println("User ID: " + userId);
-//                System.out.println("Product ID: " + productId);
-//            }
-//        }
-//    }
+
 	
 	 public boolean deleteProduct(int productId) throws ClassNotFoundException, SQLException {
 	        String sql = "DELETE FROM pharmacy_admin WHERE product_id = ?";
@@ -129,7 +101,7 @@ public class PharmacyUserDAO {
 	        }
 	    }
 	 
-	 public List<Product> getProductsByCategory(String category,int isDeleted,HttpServletRequest request) throws ClassNotFoundException, SQLException {
+	 public List<Product> getProductsByCategory(String category,int isDeleted) throws ClassNotFoundException, SQLException {
 	        List<Product> products = new ArrayList<>();
 
 	        String sql = "SELECT * FROM pharmacy_admin WHERE product_category = ? and  is_deleted=?";
@@ -142,7 +114,6 @@ public class PharmacyUserDAO {
 	            try (ResultSet resultSet = statement.executeQuery()) {
 	                while (resultSet.next()) {
 	                	
-	                	HttpSession session = request.getSession();
 	                    
 	                    int productId = resultSet.getInt("product_id");
 	                    String productName = resultSet.getString("product_name");
@@ -184,16 +155,15 @@ public class PharmacyUserDAO {
                    
                     session.setAttribute("cartId", resultSet.getInt("cart_id"));
                     
-//                    System.out.println("pharmacy DAO : "+resultSet.getInt("cart_id"));
+
                     session.setAttribute("product_id", resultSet.getInt("product_id"));
-                    System.out.println("first"+resultSet.getInt("product_id"));
                     
                     int cartId=resultSet.getInt("cart_id");
                     
 	                int productId = resultSet.getInt("product_id");
 	                String productName = resultSet.getString("product_name");
 	                int productPrice = resultSet.getInt("product_price");
-	                Blob productImage = (Blob) resultSet.getBlob("product_image");
+	                Blob productImage = resultSet.getBlob("product_image");
 	                int quantity = resultSet.getInt("quantity");
 
 	                CartItem cartItem = new CartItem(productId, productName, productPrice, (com.mysql.cj.jdbc.Blob) productImage, quantity, cartId);
@@ -349,6 +319,24 @@ public class PharmacyUserDAO {
 	            }
 	            return products;
 	        }
+	    }
+	    
+	    public int getCartItemCount(int userId) throws SQLException, ClassNotFoundException {
+	        int count = 0;
+	        String sql = "select count(*) as cart_count from add_cart where id = ?";
+	        
+	        try (Connection conn = PharmacyRegConnection.getConnection();
+		             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	            stmt.setInt(1, userId);
+	            try (ResultSet rs = stmt.executeQuery()) {
+	                if (rs.next()) {
+	                    count = rs.getInt("cart_count");
+	                }
+	            }
+	        }
+	        
+	        return count;
 	    }
 	 
 }

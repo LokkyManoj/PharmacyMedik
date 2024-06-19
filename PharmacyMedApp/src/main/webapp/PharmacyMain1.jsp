@@ -258,7 +258,7 @@ button {
             int id = (int) session.getAttribute("id");
             %>
             <div class="product-actions">
-                <form action="AddToCartServlet" class="add-to-cart-form" method="post" style="display: inline;">
+                <form action="AddToCartServlet1" class="add-to-cart-form" method="post" style="display: inline;">
                     <input type="hidden" name="product_id" value="<%=product.getProductId()%>">
                     <input type="hidden" name="user_id" value="<%=id%>">
                     <input type="number" name="quantity" min="1" max="<%=product.getProductQuantity()%>" value="1">

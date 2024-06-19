@@ -11,21 +11,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import pharmacy.util.PharmacyUserDAO;
 
-@WebServlet("/DeleteProductServlet")
-public class DeleteProductServlet extends HttpServlet {
+@WebServlet("/AddToCartServlet1")
+public class AddToCartServlet1 extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int productId = Integer.parseInt(request.getParameter("productId"));
+
+    	
+        int productId = Integer.parseInt(request.getParameter("product_id"));
+        int userId = Integer.parseInt(request.getParameter("user_id"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        
 
         try {
-            PharmacyUserDAO dao = new PharmacyUserDAO();
-            boolean success = dao.softDeleteProduct(productId);
+        	PharmacyUserDAO dao = new PharmacyUserDAO();
+            boolean success = dao.addToCart(userId, productId, quantity);
             if (success) {
-                response.sendRedirect("ViewProductServlet");
+                response.sendRedirect("PharmacyMainServlet1");
             } else {
-                request.setAttribute("message", "Failed to delete product");
+                request.setAttribute("message", "Failed to add product to cart");
                 getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
             }
         } catch (SQLException | ClassNotFoundException ex) {

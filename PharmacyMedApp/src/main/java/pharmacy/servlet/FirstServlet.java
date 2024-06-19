@@ -23,19 +23,17 @@ public class FirstServlet extends HttpServlet {
         super();
     }
 
-	
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		System.out.println("hiiiii");
 		
 	}
 
-	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
 		
-		System.out.println("Hiii");
 	    String name = request.getParameter("name");
         long mobileNo = Long.parseLong(request.getParameter("mobileNumber"));
         String email = request.getParameter("email");

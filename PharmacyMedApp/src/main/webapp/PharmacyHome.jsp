@@ -167,9 +167,29 @@ footer {
     border-top: 1px solid #e9ecef;
     width: 100%;
 }
+
+
+.cart-count {
+    position: absolute;
+    top: -4px;
+    right: 29px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+}
+a{
+text-decoration:none;
+color:white;
+}
 </style>
 </head>
 <body>
+<%HttpSession session1= request.getSession(); %>
     <form action="FirstServlet" method="get">
         <header ">
             <div class="logo-container">
@@ -190,7 +210,9 @@ footer {
                             src="images1/Loginicon2.png" alt="LogIn Icon">LogIn</a></li>
                     <% } %>
                     <li><a href="ViewCartServlet" style="text-decoration: none;" class="cart"><img
-                            src="images1/icons8-cart-32.png" alt="Cart Icon">Cart</a></li>
+                            src="images1/icons8-cart-32.png" alt="Cart Icon">Cart
+                            <span class="cart-count"><%= session1.getAttribute("cartItemCount") != null ? session1.getAttribute("cartItemCount") : 0 %></span>
+                             </a></li>
                 </ul>
             </nav>
         </header>
@@ -201,9 +223,9 @@ footer {
                     <span>1 Lakh+ Products</span> | 
                     <span>Easy Returns</span>
                 </div>
-                <form>
-                    <input type="text" class="searchy" placeholder="Search Medicines..............">
-                    <button type="submit">Search</button>
+ <form>
+                    <input type="text"  id="searchInput" class="searchy" placeholder="Search Medicines..............">
+                    <button type="submit"><a href="PharmacyMainServlet">Search</a></button>
                 </form>
             </div>
             <section class="category-cards">
@@ -227,5 +249,6 @@ footer {
             </section>
         </main>
     </form>
+
 </body>
 </html>

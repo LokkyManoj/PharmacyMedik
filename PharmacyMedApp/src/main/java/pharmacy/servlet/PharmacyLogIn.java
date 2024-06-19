@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 @WebServlet("/LoginServlet")
 public class PharmacyLogIn extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -23,15 +24,16 @@ public class PharmacyLogIn extends HttpServlet {
         super();
     }
 
-   
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
-    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -52,6 +54,8 @@ public class PharmacyLogIn extends HttpServlet {
             if (result.next()) {
                 if (password.equals(result.getString("password"))) {
                     HttpSession session = request.getSession();
+                    Integer userId = (Integer) session.getAttribute("id");
+
                     session.setAttribute("id", result.getInt("id"));
                     session.setAttribute("email", email);
                     session.setAttribute("name", result.getString("name"));
@@ -59,6 +63,7 @@ public class PharmacyLogIn extends HttpServlet {
                     if (email.endsWith("@medik.com")) {
                         response.sendRedirect("adminPage.jsp"); 
                     } else {
+                    	 
                         response.sendRedirect("PharmacyHome.jsp"); 
                     }
                 } else {
