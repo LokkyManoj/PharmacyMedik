@@ -14,7 +14,6 @@
 <title>Medik Pharmacy</title>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style>
-/* Your CSS styles */
 body {
     font-family: 'Gill Sans', sans-serif;
     margin: 0;
